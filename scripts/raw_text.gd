@@ -9,6 +9,11 @@ func _gui_input(event):
 		var end = get_selection_to()
 		if start == -1 || end == -1:
 			return
+		
+		if start > 0:
+			start -= get_parsed_text().count('\u200b', 0, start + 1 )
+		if end > 0:
+			end -= get_parsed_text().count('\u200b', 0, end + 1 )
 		$%Controller.add_span(start, abs(end - start) + 1)
 		deselect()
 		

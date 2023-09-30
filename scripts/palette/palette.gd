@@ -2,10 +2,14 @@ extends VBoxContainer
 
 
 var colors = [
-	Color.RED,
-	Color.GREEN,
-	Color.BLUE, 
-	Color.ORANGE
+	Color.from_string("#f92672", Color.WHITE),
+	Color.from_string("#ffed48", Color.WHITE),
+	Color.from_string("#a6e22e", Color.WHITE), 
+	Color.from_string("#66d9ef", Color.WHITE),
+	Color.from_string("#ae81ff", Color.WHITE),
+	Color.from_string("#fd971f", Color.WHITE),
+	Color.from_string("#75715e", Color.WHITE),
+	Color.from_string("#ffb3ce", Color.WHITE)
 ]
 # Called when the node enters the scene tree for the first time.
 func new_color():

@@ -4,7 +4,7 @@ extends Control
 # GREEN: aa
 # RED: f
 
-var raw_text = "aaasdfasdfasdf ffffffffffffffffffffffff aaaaaaaaaaaaaaaaaaaaaaaaaa"
+var raw_text = Events.puzzles[1]
 
 func _ready():
 	$VBoxContainer/RawText.text = raw_text
@@ -69,7 +69,7 @@ func render():
 			$VBoxContainer/RawText.push_color(item.color)
 			if item.underlined:
 				$VBoxContainer/RawText.push_underline()
-			$VBoxContainer/RawText.append_text(item.text)
+			$VBoxContainer/RawText.append_text(item.text.replace(' ', "•"))
 			if item.underlined:
 				$VBoxContainer/RawText.pop()
 				# we put a lil zero width space in there to make it work good
@@ -80,6 +80,10 @@ func render():
 		if typeof(item) == TYPE_STRING:
 			$VBoxContainer/Compressed.append_text(item)
 		elif typeof(item) == TYPE_DICTIONARY:
+			$VBoxContainer/Compressed.push_outline_color(item.color)
 			$VBoxContainer/Compressed.push_color(item.color)
+			$VBoxContainer/Compressed.push_outline_size(2)
 			$VBoxContainer/Compressed.append_text("•")
+			$VBoxContainer/Compressed.pop()
+			$VBoxContainer/Compressed.pop()
 			$VBoxContainer/Compressed.pop()

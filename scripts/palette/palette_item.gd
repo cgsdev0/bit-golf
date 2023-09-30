@@ -4,7 +4,7 @@ class_name PaletteItem extends Control
 @export var text: String = "":
 	set (value):
 		text = value
-		$PaletteItem/Label.text = value
+		$PaletteItem/Label.text = value.replace('\n', '↲').replace(' ', '\u23b5')
 		
 @export var color: Color = Color.WHITE:
 	set (value):

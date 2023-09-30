@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=4 format=3 uid="uid://q0quvtkvw84n"]
 
-[ext_resource type="FontFile" uid="uid://vwsyssf0whl7" path="res://fonts/PixelOperatorMono.ttf" id="1_s2piy"]
+[ext_resource type="FontFile" uid="uid://dmuvhfa3jif6n" path="res://fonts/PixelOperatorMono2.ttf" id="2_mu6l6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_885a1"]
 
@@ -11,8 +11,7 @@ content_margin_right = 0.0
 content_margin_bottom = 0.0
 
 [resource]
-default_font = ExtResource("1_s2piy")
-Label/fonts/font = ExtResource("1_s2piy")
+default_font = ExtResource("2_mu6l6")
 RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 RichTextLabel/colors/font_outline_color = Color(1, 1, 1, 1)
 RichTextLabel/colors/font_selected_color = Color(0, 0, 0, 0)
