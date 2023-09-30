@@ -1,0 +1,4 @@
+[gd_resource type="Theme" format=3 uid="uid://ddt3ckyioslcq"]
+
+[resource]
+HBoxContainer/constants/separation = 4

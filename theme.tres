@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://q0quvtkvw84n"]
+
+[ext_resource type="FontFile" uid="uid://vwsyssf0whl7" path="res://fonts/PixelOperatorMono.ttf" id="1_s2piy"]
+
+[resource]
+default_font = ExtResource("1_s2piy")
+Label/fonts/font = ExtResource("1_s2piy")

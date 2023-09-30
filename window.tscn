@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b40jj5hn17ngx"]
+
+[ext_resource type="Script" path="res://scripts/window/window.gd" id="1_1json"]
+[ext_resource type="Script" path="res://scripts/window/title.gd" id="2_ddxvk"]
+[ext_resource type="Script" path="res://scripts/window/body.gd" id="2_ur1v0"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_1json")
+dimensions = Vector2(80, 80)
+title = "hello world"
+
+[node name="Body" type="MarginContainer" parent="."]
+offset_right = 80.0
+offset_bottom = 80.0
+mouse_filter = 0
+script = ExtResource("2_ur1v0")
+
+[node name="Title" type="Control" parent="Body"]
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("2_ddxvk")

@@ -1,3 +1,18 @@
-[gd_scene format=3 uid="uid://5erleu6k4tjn"]
+[gd_scene load_steps=3 format=3 uid="uid://5erleu6k4tjn"]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource type="PackedScene" uid="uid://b40jj5hn17ngx" path="res://window.tscn" id="1_im7km"]
+[ext_resource type="Script" path="res://scripts/window/manager.gd" id="1_sl4xy"]
+
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_sl4xy")
+
+[node name="Node2D" parent="." instance=ExtResource("1_im7km")]
+dimensions = Vector2(200, 80)
+color = Color(0, 1, 1, 1)
+
+[node name="Node2D2" parent="." instance=ExtResource("1_im7km")]
+dimensions = Vector2(300, 200)
+color = Color(1, 0, 1, 1)
+title = "goodbye"

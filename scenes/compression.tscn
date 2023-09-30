@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://i5glok4afuen"]
+
+[ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_lmp5r"]
+[ext_resource type="Script" path="res://scripts/palette/palette.gd" id="2_7s8ai"]
+[ext_resource type="Script" path="res://scripts/palette/new.gd" id="2_od5al"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_lmp5r")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Palette" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+theme_override_constants/separation = -3
+script = ExtResource("2_7s8ai")
+
+[node name="NewColor" type="Label" parent="HBoxContainer/Palette"]
+layout_mode = 2
+mouse_filter = 1
+text = " + new color"
+script = ExtResource("2_od5al")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "asdfasdfasdf ffffffffffffffffffffffff aaaaaaaaaaaaaaaaaaaaaaaaaa"
+autowrap_mode = 1
