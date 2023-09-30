@@ -26,24 +26,45 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_unl4r")
 
-[node name="Palette" type="VBoxContainer" parent="Controller"]
+[node name="Sidebar" type="VBoxContainer" parent="Controller"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+
+[node name="Palette" type="VBoxContainer" parent="Controller/Sidebar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = -3
 script = ExtResource("2_7s8ai")
 
-[node name="NewColor" type="Label" parent="Controller/Palette"]
+[node name="NewColor" type="Label" parent="Controller/Sidebar/Palette"]
+unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
 text = " + new color"
 script = ExtResource("2_od5al")
+
+[node name="Score" type="VBoxContainer" parent="Controller/Sidebar"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="RichTextLabel" parent="Controller/Sidebar/Score"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+text = "Bytes:
+10 -> 8
+
+Compressed: 95%
+Quota:      10%"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Controller"]
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="RawText" type="RichTextLabel" parent="Controller/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -56,6 +77,7 @@ selection_enabled = true
 script = ExtResource("4_i72la")
 
 [node name="Compressed" type="RichTextLabel" parent="Controller/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

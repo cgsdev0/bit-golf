@@ -22,6 +22,7 @@ var matched: bool = false
 func _gui_input(event):
 	if event is InputEventMouseButton && event.button_index == 2 && event.is_pressed():
 		accept_event()
+		get_parent().return_color(self.color)
 		get_parent().queue_repaint()
 		get_parent().remove_child(self)
 		queue_free()

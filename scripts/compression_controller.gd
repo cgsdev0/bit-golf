@@ -6,12 +6,22 @@ extends Control
 
 var raw_text = Events.puzzles[1]
 
+var score_string = """Bytes:
+{input} -> {output}
+
+Compressed: {ratio}%
+Quota:      {quota}%
+"""
+
+var comment_color = Color.from_string("#75715e", Color.WHITE)
+
 func _ready():
 	$VBoxContainer/RawText.text = raw_text
 	$VBoxContainer/Compressed.text = raw_text
+	render()
 	
 func add_span(idx: int, n: int):
-	$Palette.add_span(idx, min(8, n))
+	$%Palette.add_span(idx, min(8, n))
 	render()
 
 func parse(text, span):
@@ -43,10 +53,20 @@ func flatten(arr, result = []):
 			result.push_back(item)
 	return result
 	
+func update_score():
+	var input = $%RawText.get_parsed_text().replace('\u200b', '').length()
+	var output = $%Compressed.get_parsed_text().length()
+	var cost = $%Palette.get_palette_cost()
+	$%ScoreLabel.text = score_string.format({
+		"input": input, 
+		"output": output + cost, 
+		"ratio": 100 - round(float(output + cost) / input * 100.0),
+		"quota": 50})
+	
 func render():
 	var new_text = ""
 	var spans = []
-	for span in $Palette.get_children():
+	for span in $%Palette.get_children():
 		if !is_instance_of(span, PaletteItem):
 			continue
 		if !span.text:
@@ -78,7 +98,9 @@ func render():
 			idx += item.text.length()
 	for item in flat:
 		if typeof(item) == TYPE_STRING:
+			$VBoxContainer/Compressed.push_color(comment_color)
 			$VBoxContainer/Compressed.append_text(item)
+			$VBoxContainer/Compressed.pop()
 		elif typeof(item) == TYPE_DICTIONARY:
 			$VBoxContainer/Compressed.push_outline_color(item.color)
 			$VBoxContainer/Compressed.push_color(item.color)
@@ -87,3 +109,4 @@ func render():
 			$VBoxContainer/Compressed.pop()
 			$VBoxContainer/Compressed.pop()
 			$VBoxContainer/Compressed.pop()
+	update_score()
