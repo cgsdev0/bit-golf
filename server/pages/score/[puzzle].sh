@@ -1,3 +1,8 @@
+# headers
+
+header Content-Type 'text/plain'
+header Access-Control-Allow-Origin '*'
+end_headers
 
 PUZZLE=$(echo "${PATH_VARS[puzzle]}" | tr -d '\n' | sed 's/[^0-9]//g')
 
