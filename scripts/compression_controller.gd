@@ -4,7 +4,7 @@ extends Control
 # GREEN: aa
 # RED: f
 
-var puzzle = Events.puzzles[1]
+var puzzle = Events.puzzles[0]
 var raw_text
 
 var score_string = """Bytes:

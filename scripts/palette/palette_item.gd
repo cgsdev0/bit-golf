@@ -47,6 +47,7 @@ func _input(event):
 			if target_slot < 0 || target_slot >= get_parent().get_child_count() - 1:
 				return
 			get_parent().move_child(self, target_slot)
+			get_parent().queue_repaint()
 			drag_offset.y = get_global_mouse_position().y
 	if event is InputEventMouseButton && event.button_index == 1 && event.is_released():
 		if dragging:
