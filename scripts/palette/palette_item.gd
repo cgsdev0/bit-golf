@@ -9,7 +9,7 @@ class_name PaletteItem extends Control
 @export var color: Color = Color.WHITE:
 	set (value):
 		color = value
-		$PaletteItem/Sprite2D.modulate = value
+		$PaletteItem/HBoxContainer/Sprite2D.modulate = value
 		
 var rle: bool = false
 		
@@ -22,27 +22,52 @@ var matched: bool = false
 
 var rle_sprite = preload("res://sprites/circle_rle.png")
 var default_sprite = preload("res://sprites/circle.png")
+
+var dragging = false
+var drag_offset = Vector2.ZERO
+var offset_offset = Vector2.ZERO
+	
+func delete_me():
+	accept_event()
+	var old_idx = get_index()
+	var old_parent = get_parent()
+	get_parent().return_color(self.color)
+	get_parent().queue_repaint()
+	get_parent().remove_child(self)
+	old_parent.select(old_idx)
+	queue_free()
 	
 func _input(event):
 	if event.is_action_pressed("delete") && selected:
-		accept_event()
-		var old_idx = get_index()
-		var old_parent = get_parent()
-		get_parent().return_color(self.color)
-		get_parent().queue_repaint()
-		get_parent().remove_child(self)
-		old_parent.select(old_idx)
-		queue_free()
+		delete_me()
+	if event is InputEventMouseMotion && dragging:
+		var diff = (get_global_mouse_position() - drag_offset).y
+		if abs(diff) > get_rect().size.y:
+			var target_slot = get_index() + (sign(diff) * floor(abs(diff / float(get_rect().size.y))))
+			if target_slot < 0 || target_slot >= get_parent().get_child_count() - 1:
+				return
+			get_parent().move_child(self, target_slot)
+			drag_offset.y = get_global_mouse_position().y
+	if event is InputEventMouseButton && event.button_index == 1 && event.is_released():
+		if dragging:
+			dragging = false
 		
 func _gui_input(event):
 	if event is InputEventMouseButton && event.button_index == 2 && event.is_pressed():
 		accept_event()
 		rle = !rle
 		if rle:
-			$PaletteItem/Sprite2D.texture = rle_sprite
+			$PaletteItem/HBoxContainer/Sprite2D.texture = rle_sprite
 		else:
-			$PaletteItem/Sprite2D.texture = default_sprite
+			$PaletteItem/HBoxContainer/Sprite2D.texture = default_sprite
 		get_parent().queue_repaint()
 	if event is InputEventMouseButton && event.button_index == 1 && event.is_pressed():
+		dragging = true
+		drag_offset = get_global_mouse_position()
 		accept_event()
 		get_parent().select(get_index())
+	
+
+
+func _on_delete_pressed():
+	delete_me()
