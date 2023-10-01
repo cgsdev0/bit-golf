@@ -29,5 +29,6 @@ func _process(delta):
 
 func _gui_input(event):
 	if event is InputEventMouseButton && event.button_index == 1 && event.is_pressed():
+		$Pop.play_random()
 		accept_event()
 		get_parent().new_color()

@@ -24,15 +24,22 @@ func reset_stars():
 	$%Stars/StarSlot2/AnimationPlayer.play("RESET")
 	$%Stars/StarSlot3/AnimationPlayer.play("RESET")
 	
+var star_volume = 8.0
 func drop_stars(n: int):
+	$%Stars/StarSlot/Ding.volume_db = star_volume
+	$%Stars/StarSlot2/Ding.volume_db = star_volume
+	$%Stars/StarSlot3/Ding.volume_db = star_volume
 	if n > 0:
 		$%Stars/StarSlot/AnimationPlayer.play("fill")
+		$%Stars/StarSlot/Ding.play()
 	if n > 1:
 		await get_tree().create_timer(0.25).timeout
 		$%Stars/StarSlot2/AnimationPlayer.play("fill")
+		$%Stars/StarSlot2/Ding.play()
 	if n > 2:
 		await get_tree().create_timer(0.25).timeout
 		$%Stars/StarSlot3/AnimationPlayer.play("fill")
+		$%Stars/StarSlot3/Ding.play()
 		
 func _ready():
 	Events.puzzle_change.connect(_on_puzzle_change)

@@ -114,6 +114,7 @@ signal close_window
 signal reset_level
 signal puzzle_change
 signal win_level
+signal button_pressed_lol
 
 func try_again():
 	self.puzzle_change.emit()

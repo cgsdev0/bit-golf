@@ -39,11 +39,13 @@ offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_constants/separation = -6
 
 [node name="TextureRect3" type="TextureRect" parent="Stars"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 texture = SubResource("AtlasTexture_86wvd")
 expand_mode = 1
 stretch_mode = 4
@@ -51,6 +53,7 @@ stretch_mode = 4
 [node name="TextureRect4" type="TextureRect" parent="Stars"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 texture = SubResource("AtlasTexture_eqbgr")
 expand_mode = 1
 stretch_mode = 4
@@ -58,6 +61,7 @@ stretch_mode = 4
 [node name="TextureRect5" type="TextureRect" parent="Stars"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 texture = SubResource("AtlasTexture_17h2b")
 expand_mode = 1
 stretch_mode = 4

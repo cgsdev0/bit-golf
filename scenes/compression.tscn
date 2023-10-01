@@ -1,13 +1,29 @@
-[gd_scene load_steps=25 format=3 uid="uid://i5glok4afuen"]
+[gd_scene load_steps=41 format=3 uid="uid://i5glok4afuen"]
 
 [ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_lmp5r"]
 [ext_resource type="Script" path="res://scripts/palette/palette.gd" id="2_7s8ai"]
 [ext_resource type="Script" path="res://scripts/palette/new.gd" id="2_od5al"]
 [ext_resource type="Script" path="res://scripts/compression_controller.gd" id="2_unl4r"]
 [ext_resource type="Script" path="res://scripts/raw_text.gd" id="4_i72la"]
+[ext_resource type="Script" path="res://scripts/random_audio.gd" id="5_pbx6w"]
 [ext_resource type="Script" path="res://scripts/win_screen.gd" id="6_epnut"]
 [ext_resource type="Texture2D" uid="uid://c3tjlwq51vqap" path="res://sprites/stars.png" id="6_lsowc"]
+[ext_resource type="AudioStream" uid="uid://bl1md1qg0q7sy" path="res://sounds/pop1.wav" id="6_wk5kd"]
+[ext_resource type="AudioStream" uid="uid://ckb1pg821i1pq" path="res://sounds/pop2.wav" id="7_8ankp"]
+[ext_resource type="AudioStream" uid="uid://lw7iiwrnyjay" path="res://sounds/pop3.wav" id="8_ajv6r"]
 [ext_resource type="Script" path="res://scripts/back.gd" id="8_u1hl1"]
+[ext_resource type="AudioStream" uid="uid://78ladglhkag5" path="res://sounds/delete1.wav" id="9_wid4j"]
+[ext_resource type="AudioStream" uid="uid://di51p7xe3u70c" path="res://sounds/delete2.wav" id="10_c5tbe"]
+[ext_resource type="AudioStream" uid="uid://buy2aorxnj4o7" path="res://sounds/delete3.wav" id="11_qgiqq"]
+[ext_resource type="AudioStream" uid="uid://bxw6xebutwooo" path="res://sounds/scribble.wav" id="12_jobqu"]
+[ext_resource type="AudioStream" uid="uid://csjph0plxewrt" path="res://sounds/scribble2.wav" id="13_dj24g"]
+[ext_resource type="AudioStream" uid="uid://dw6w2o3wnxqjy" path="res://sounds/scribble3.wav" id="14_4l3yl"]
+[ext_resource type="AudioStream" uid="uid://cfkileh6bkecr" path="res://sounds/scribble4.wav" id="15_dbh6e"]
+[ext_resource type="AudioStream" uid="uid://3es0pjklagdj" path="res://sounds/scribble5.wav" id="16_hjoj8"]
+[ext_resource type="Script" path="res://scripts/button_juice.gd" id="17_jggeb"]
+[ext_resource type="AudioStream" uid="uid://bhh57300ea24q" path="res://sounds/star1.wav" id="21_3lihj"]
+[ext_resource type="AudioStream" uid="uid://22ki5cav18n" path="res://sounds/star2.wav" id="22_s4g4q"]
+[ext_resource type="AudioStream" uid="uid://0d4vnb8aqw4i" path="res://sounds/star3.wav" id="23_hrfhv"]
 
 [sub_resource type="Animation" id="Animation_5yyxf"]
 resource_name = "flash"
@@ -381,6 +397,26 @@ libraries = {
 "": SubResource("AnimationLibrary_1dtfm")
 }
 
+[node name="Pop" type="AudioStreamPlayer" parent="Controller/Sidebar/Palette/NewColor"]
+volume_db = -4.979
+script = ExtResource("5_pbx6w")
+samples = Array[AudioStream]([ExtResource("6_wk5kd"), ExtResource("7_8ankp"), ExtResource("8_ajv6r")])
+random_volume_range = 0.851
+random_pitch_range = 0.106
+
+[node name="Delete" type="AudioStreamPlayer" parent="Controller/Sidebar/Palette/NewColor"]
+script = ExtResource("5_pbx6w")
+samples = Array[AudioStream]([ExtResource("9_wid4j"), ExtResource("10_c5tbe"), ExtResource("11_qgiqq")])
+random_volume_range = 0.851
+random_pitch_range = 0.13
+
+[node name="Scribble" type="AudioStreamPlayer" parent="Controller/Sidebar/Palette/NewColor"]
+volume_db = 3.429
+script = ExtResource("5_pbx6w")
+samples = Array[AudioStream]([ExtResource("12_jobqu"), ExtResource("13_dj24g"), ExtResource("14_4l3yl"), ExtResource("15_dbh6e"), ExtResource("16_hjoj8")])
+random_strategy = 1
+random_volume_range = 0.879
+
 [node name="Score" type="VBoxContainer" parent="Controller/Sidebar"]
 layout_mode = 2
 
@@ -400,6 +436,7 @@ unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 text = "SUBMIT"
+script = ExtResource("17_jggeb")
 
 [node name="VSeparator" type="VSeparator" parent="Controller"]
 layout_mode = 2
@@ -515,6 +552,9 @@ libraries = {
 "": SubResource("AnimationLibrary_nh1r5")
 }
 
+[node name="Ding" type="AudioStreamPlayer" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot"]
+stream = ExtResource("21_3lihj")
+
 [node name="StarSlot2" type="TextureRect" parent="WinScreen/Panel/VBoxContainer/Stars"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_kkvbj")
@@ -532,6 +572,9 @@ libraries = {
 "": SubResource("AnimationLibrary_nh1r5")
 }
 
+[node name="Ding" type="AudioStreamPlayer" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot2"]
+stream = ExtResource("22_s4g4q")
+
 [node name="StarSlot3" type="TextureRect" parent="WinScreen/Panel/VBoxContainer/Stars"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_kkvbj")
@@ -548,6 +591,9 @@ texture = SubResource("AtlasTexture_l6bn3")
 libraries = {
 "": SubResource("AnimationLibrary_nh1r5")
 }
+
+[node name="Ding" type="AudioStreamPlayer" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot3"]
+stream = ExtResource("23_hrfhv")
 
 [node name="YourScoreLabel" type="Label" parent="WinScreen/Panel/VBoxContainer"]
 unique_name_in_owner = true
@@ -575,11 +621,13 @@ theme_override_constants/separation = 25
 layout_mode = 2
 focus_mode = 0
 text = "Try Again"
+script = ExtResource("17_jggeb")
 
 [node name="NextPuzzleBtn" type="Button" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 text = "Next Task"
+script = ExtResource("17_jggeb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WinScreen"]
 libraries = {
@@ -637,11 +685,13 @@ theme_override_constants/separation = 25
 layout_mode = 2
 focus_mode = 0
 text = "Cancel"
+script = ExtResource("17_jggeb")
 
 [node name="QuitBtn" type="Button" parent="ConfirmBack/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 text = "Quit"
+script = ExtResource("17_jggeb")
 
 [connection signal="pressed" from="Controller/Sidebar/Submit" to="Controller" method="_on_submit_pressed"]
 [connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/TryAgainBtn" to="Controller" method="_on_try_again_btn_pressed"]

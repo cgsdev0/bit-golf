@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://c8t2hcrbt5waj"]
+[gd_scene load_steps=15 format=3 uid="uid://c8t2hcrbt5waj"]
 
 [ext_resource type="Texture2D" uid="uid://clii8ecq2bwbt" path="res://sprites/circle.png" id="1_23423"]
 [ext_resource type="Script" path="res://scripts/palette/palette_item.gd" id="1_kljs8"]
 [ext_resource type="Theme" uid="uid://ddt3ckyioslcq" path="res://selected_theme.tres" id="1_pg2ed"]
 [ext_resource type="Texture2D" uid="uid://bcw4wevj5xjmr" path="res://sprites/trash.png" id="3_644c4"]
 [ext_resource type="Texture2D" uid="uid://bl3gqw34yyqo0" path="res://sprites/rmb_hint.png" id="5_lm4ia"]
+[ext_resource type="AudioStream" uid="uid://3mcbsxkb6lsv" path="res://sounds/hover.wav" id="6_hhx6o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0at7s"]
 atlas = ExtResource("3_644c4")
@@ -127,5 +128,9 @@ root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_qrfav")
 }
+
+[node name="RLE" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_hhx6o")
+volume_db = -7.192
 
 [connection signal="pressed" from="PaletteItem/HBoxContainer/Delete" to="." method="_on_delete_pressed"]

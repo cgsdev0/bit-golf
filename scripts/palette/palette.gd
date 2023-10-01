@@ -38,6 +38,7 @@ func select(index: int):
 
 func return_color(col):
 	colors_mut.push_front(col)
+	$NewColor/Delete.play_random()
 	$%NewColor.show()
 	
 func queue_repaint():
@@ -57,6 +58,9 @@ func reset():
 			remove_child(child)
 			child.queue_free()
 			
+func play_pop():
+	$%NewColor/Pop.play_random()
+	
 func get_palette_cost():
 	var cost = 0
 	for item in get_children():
@@ -74,6 +78,7 @@ func get_palette_cost():
 func add_span(idx: int, n: int):
 	var selected = find_selected()
 	if selected != null:
+		$NewColor/Scribble.play_random()
 		selected.text = $%Controller.raw_text.substr(idx, n)
 		if selected.text == "compress" && Events.puzzle_index == 0:
 			$%Tutor/AnimationPlayer.play('fade_out')

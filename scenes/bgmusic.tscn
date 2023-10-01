@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://j33tbhlaqey8"]
+[gd_scene load_steps=4 format=3 uid="uid://j33tbhlaqey8"]
 
 [ext_resource type="AudioStream" uid="uid://yijjow2qcinl" path="res://music.wav" id="1_6j3tm"]
+[ext_resource type="AudioStream" uid="uid://4yo6fml7pfjy" path="res://sounds/button.wav" id="2_we088"]
+[ext_resource type="Script" path="res://scripts/hacks.gd" id="3_tmfim"]
 
 [node name="Node" type="Node"]
 
@@ -8,3 +10,7 @@
 stream = ExtResource("1_6j3tm")
 volume_db = -9.957
 autoplay = true
+
+[node name="ButtonSoundLol" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_we088")
+script = ExtResource("3_tmfim")

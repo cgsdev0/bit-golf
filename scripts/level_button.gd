@@ -1,4 +1,4 @@
-extends Button
+extends ButtonJuice
 
 @export var stars: int = 0 :
 	set (value):
@@ -10,3 +10,9 @@ extends Button
 func _on_pressed():
 	Events.puzzle_index = get_index()
 	get_tree().change_scene_to_file("res://scenes/compression.tscn")
+
+
+func on_enter():
+	if !disabled:
+		player.play()
+
