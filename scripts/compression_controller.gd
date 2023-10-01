@@ -4,7 +4,7 @@ extends Control
 # GREEN: aa
 # RED: f
 
-var puzzle = Events.puzzles[0]
+var puzzle = null
 var raw_text
 
 var score_string = """Bytes:
@@ -17,14 +17,26 @@ Compressed: {ratio}%
 var comment_color = Color.from_string("#75715e", Color.WHITE)
 
 func _ready():
+	Events.puzzle_change.connect(_on_puzzle_change)
+	_on_puzzle_change()
+	
+func _on_puzzle_change():
+	puzzle = Events.puzzles[Events.puzzle_index]
+	$%Palette.reset()
 	raw_text = puzzle.puzzle
 	$VBoxContainer/RawText.text = raw_text
 	$VBoxContainer/Compressed.text = raw_text
 	render()
-	
+		
+func _input(event):
+	if event.is_action_pressed("ui_accept") && OS.is_debug_build():
+		Events.next_puzzle()
+		
+		
 func add_span(idx: int, n: int):
 	$%Palette.add_span(idx, min(12, n))
 	render()
+
 
 func parse(text, span):
 	var result = []

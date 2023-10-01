@@ -37,6 +37,19 @@ func delete_me():
 	old_parent.select(old_idx)
 	queue_free()
 	
+var shown = false
+
+func flash_hint():
+	shown = true
+	$RMBHint.show()
+	$RMBHint/AnimationPlayer.play("flash")
+	
+func _process(delta):
+	if Events.puzzle_index != 2:
+		return
+	if text.contains("=") && !shown:
+		flash_hint()
+		
 func _input(event):
 	if event.is_action_pressed("delete") && selected:
 		delete_me()
@@ -58,6 +71,7 @@ func _gui_input(event):
 		accept_event()
 		rle = !rle
 		if rle:
+			$RMBHint.hide()
 			$PaletteItem/HBoxContainer/Sprite2D.texture = rle_sprite
 		else:
 			$PaletteItem/HBoxContainer/Sprite2D.texture = default_sprite

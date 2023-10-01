@@ -1,5 +1,6 @@
 extends Node
 
+var puzzle_index = 0
 
 var puzzles = [
 	{
@@ -84,3 +85,8 @@ ACCOUNT           BALANCE
 signal open_window(node)
 signal close_window
 signal reset_level
+signal puzzle_change
+
+func next_puzzle():
+	puzzle_index += 1
+	self.puzzle_change.emit()

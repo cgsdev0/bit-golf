@@ -49,6 +49,13 @@ func find_selected():
 			return item
 	return null
 	
+func reset():
+	colors_mut = colors.duplicate()
+	for child in get_children():
+		if is_instance_of(child, PaletteItem):
+			remove_child(child)
+			child.queue_free()
+			
 func get_palette_cost():
 	var cost = 0
 	for item in get_children():
@@ -67,3 +74,5 @@ func add_span(idx: int, n: int):
 	var selected = find_selected()
 	if selected != null:
 		selected.text = $%Controller.raw_text.substr(idx, n)
+		if selected.text == "compress" && Events.puzzle_index == 0:
+			$%Tutor/AnimationPlayer.play('fade_out')
