@@ -1,18 +1,33 @@
 [gd_scene load_steps=3 format=3 uid="uid://5erleu6k4tjn"]
 
-[ext_resource type="PackedScene" uid="uid://b40jj5hn17ngx" path="res://window.tscn" id="1_im7km"]
-[ext_resource type="Script" path="res://scripts/window/manager.gd" id="1_sl4xy"]
+[ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_6xps3"]
+[ext_resource type="Script" path="res://scripts/level_select.gd" id="2_ar6l1"]
 
 [node name="Node2D" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_sl4xy")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6xps3")
+script = ExtResource("2_ar6l1")
 
-[node name="Node2D" parent="." instance=ExtResource("1_im7km")]
-dimensions = Vector2(200, 80)
-color = Color(0, 1, 1, 1)
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Node2D2" parent="." instance=ExtResource("1_im7km")]
-dimensions = Vector2(300, 200)
-color = Color(1, 0, 1, 1)
-title = "goodbye"
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "LEVEL SELECT"
+horizontal_alignment = 1
+
+[node name="Grid" type="GridContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 5

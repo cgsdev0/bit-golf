@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://c1vw11a583ujv"]
+
+[ext_resource type="Texture2D" uid="uid://c3tjlwq51vqap" path="res://sprites/stars.png" id="1_chrj1"]
+[ext_resource type="Script" path="res://scripts/level_button.gd" id="1_wjbds"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86wvd"]
+resource_local_to_scene = true
+atlas = ExtResource("1_chrj1")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqbgr"]
+resource_local_to_scene = true
+atlas = ExtResource("1_chrj1")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17h2b"]
+resource_local_to_scene = true
+atlas = ExtResource("1_chrj1")
+region = Rect2(0, 0, 48, 48)
+
+[node name="Control" type="Button"]
+custom_minimum_size = Vector2(70, 70)
+offset_right = 60.0
+offset_bottom = 40.0
+focus_mode = 0
+text = "level 1
+
+"
+script = ExtResource("1_wjbds")
+
+[node name="Stars" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.527
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.889999
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = -6
+
+[node name="TextureRect3" type="TextureRect" parent="Stars"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_86wvd")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TextureRect4" type="TextureRect" parent="Stars"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_eqbgr")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TextureRect5" type="TextureRect" parent="Stars"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_17h2b")
+expand_mode = 1
+stretch_mode = 4
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -11,17 +11,36 @@ var score_string = """Bytes:
 {input} -> {output}
 
 Compressed: {ratio}%
-[color={quota_color}]Quota:      {quota}%[/color]
+Quota: [color={quota0_color}]{quota0}[/color][color={cc_str}]/[/color][color={quota1_color}]{quota1}[/color][color={cc_str}]/[/color][color={quota2_color}]{quota2}[/color][color={cc_str}]%[/color]
 """
 
-var comment_color = Color.from_string("#75715e", Color.WHITE)
+var cc_str = "#75715e"
+var comment_color = Color.from_string(cc_str, Color.WHITE)
 
+var stars = 0
+
+func reset_stars():
+	$%Stars/StarSlot/AnimationPlayer.play("RESET")
+	$%Stars/StarSlot2/AnimationPlayer.play("RESET")
+	$%Stars/StarSlot3/AnimationPlayer.play("RESET")
+	
+func drop_stars(n: int):
+	if n > 0:
+		$%Stars/StarSlot/AnimationPlayer.play("fill")
+	if n > 1:
+		await get_tree().create_timer(0.25).timeout
+		$%Stars/StarSlot2/AnimationPlayer.play("fill")
+	if n > 2:
+		await get_tree().create_timer(0.25).timeout
+		$%Stars/StarSlot3/AnimationPlayer.play("fill")
+		
 func _ready():
 	Events.puzzle_change.connect(_on_puzzle_change)
 	_on_puzzle_change()
 	
 func _on_puzzle_change():
 	puzzle = Events.puzzles[Events.puzzle_index]
+	stars = 0
 	$%Palette.reset()
 	raw_text = puzzle.puzzle
 	$VBoxContainer/RawText.text = raw_text
@@ -82,18 +101,41 @@ func collapse(arr):
 		i += 1
 	return arr.filter(func(d): return d is String || d.count > 0)
 	
-func update_score():
+@onready var original_text = $%YourScoreLabel.text
+
+func update_score(this_is_dumb_but_its_a_game_jam_so_its_ok_smile = false):
 	var input = $%RawText.get_parsed_text().replace('\u200b', '').length()
 	var output = $%Compressed.get_parsed_text().length()
 	var cost = $%Palette.get_palette_cost()
+	if this_is_dumb_but_its_a_game_jam_so_its_ok_smile:
+		$%YourScoreLabel.text = original_text % (output + cost)
 	var ratio = 100 - round(float(output + cost) / input * 100.0)
-	var quota = puzzle.quota[0]
+	var quota_color = ["red", cc_str, cc_str]
+	stars = 0
+	if ratio >= puzzle.quota[0]:
+		quota_color = ["green", "red", cc_str]
+		stars += 1
+	if ratio >= puzzle.quota[1]:
+		quota_color = ["green", "green", "red"]
+		stars += 1
+	if ratio >= puzzle.quota[2]:
+		quota_color = ["green", "green", "green"]
+		stars += 1
+		
+	$%Submit.disabled = ratio < puzzle.quota[0]
+		
 	$%ScoreLabel.text = score_string.format({
 		"input": input, 
 		"output": output + cost, 
 		"ratio": ratio,
-		"quota": quota,
-		"quota_color": "red" if ratio < quota else "green"})
+		"quota0": puzzle.quota[0],
+		"quota1": puzzle.quota[1],
+		"quota2": puzzle.quota[2],
+		"cc_str": cc_str,
+		"quota0_color": quota_color[0], 
+		"quota1_color": quota_color[1], 
+		"quota2_color": quota_color[2], 
+		})
 	
 func render():
 	var new_text = ""
@@ -144,3 +186,23 @@ func render():
 				$VBoxContainer/Compressed.append_text("%02d" % item.count)
 			$VBoxContainer/Compressed.pop()
 	update_score()
+
+
+func _on_try_again_btn_pressed():
+	Events.try_again()
+
+
+func _on_next_puzzle_btn_pressed():
+	Events.next_puzzle()
+
+
+func _on_submit_pressed():
+	update_score(true)
+	if Events.puzzle_index == Events.stars.size():
+		Events.stars.push_back(stars)
+	else:
+		Events.stars[Events.puzzle_index] = max(Events.stars[Events.puzzle_index], stars)
+	Events.save_game()
+	Events.win_level.emit()
+	await get_tree().create_timer(0.5).timeout
+	drop_stars(stars)

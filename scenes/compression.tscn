@@ -1,10 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://i5glok4afuen"]
+[gd_scene load_steps=25 format=3 uid="uid://i5glok4afuen"]
 
 [ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_lmp5r"]
 [ext_resource type="Script" path="res://scripts/palette/palette.gd" id="2_7s8ai"]
 [ext_resource type="Script" path="res://scripts/palette/new.gd" id="2_od5al"]
 [ext_resource type="Script" path="res://scripts/compression_controller.gd" id="2_unl4r"]
 [ext_resource type="Script" path="res://scripts/raw_text.gd" id="4_i72la"]
+[ext_resource type="Script" path="res://scripts/win_screen.gd" id="6_epnut"]
+[ext_resource type="Texture2D" uid="uid://c3tjlwq51vqap" path="res://sprites/stars.png" id="6_lsowc"]
+[ext_resource type="Script" path="res://scripts/back.gd" id="8_u1hl1"]
 
 [sub_resource type="Animation" id="Animation_5yyxf"]
 resource_name = "flash"
@@ -26,35 +29,6 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1dtfm"]
 _data = {
 "flash": SubResource("Animation_5yyxf")
-}
-
-[sub_resource type="Animation" id="Animation_ly8fb"]
-resource_name = "teach"
-length = 1.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8, 1.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 16), Vector2(66, 16), Vector2(66, 16)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.8, 1.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_y56p0"]
@@ -112,11 +86,254 @@ tracks/1/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_ly8fb"]
+resource_name = "teach"
+length = 1.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 16), Vector2(66, 16), Vector2(66, 16)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.8, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3ujpg"]
 _data = {
 "RESET": SubResource("Animation_y56p0"),
 "fade_out": SubResource("Animation_pywtu"),
 "teach": SubResource("Animation_ly8fb")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f14dq"]
+bg_color = Color(0.180392, 0.180392, 0.180392, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.560784, 0.560784, 0.560784, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 2
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkvbj"]
+atlas = ExtResource("6_lsowc")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6bn3"]
+atlas = ExtResource("6_lsowc")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="Animation" id="Animation_stnbw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Star:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Star:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Star:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -48)]
+}
+
+[sub_resource type="Animation" id="Animation_egtar"]
+resource_name = "fill"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Star:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Star:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Star:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 1.2),
+"transitions": PackedFloat32Array(0.574349, 1),
+"update": 0,
+"values": [Vector2(0, -48), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nh1r5"]
+_data = {
+"RESET": SubResource("Animation_stnbw"),
+"fill": SubResource("Animation_egtar")
+}
+
+[sub_resource type="Animation" id="Animation_12d5l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_yl72r"]
+resource_name = "fade_in"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_t1htv"]
+resource_name = "fade_out"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%Controller")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"reset_stars"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_je80h"]
+_data = {
+"RESET": SubResource("Animation_12d5l"),
+"fade_in": SubResource("Animation_yl72r"),
+"fade_out": SubResource("Animation_t1htv")
 }
 
 [node name="Control" type="Control"]
@@ -178,6 +395,12 @@ text = "Bytes:
 Compressed: 95%
 Quota:      10%"
 
+[node name="Submit" type="Button" parent="Controller/Sidebar"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "SUBMIT"
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Controller"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -219,3 +442,197 @@ size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
 autowrap_mode = 1
+
+[node name="WinScreen" type="ColorRect" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.729412)
+script = ExtResource("6_epnut")
+
+[node name="Panel" type="Panel" parent="WinScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f14dq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WinScreen/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="WinScreen/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "ASSIGNMENT COMPLETE"
+horizontal_alignment = 1
+
+[node name="Stars" type="HBoxContainer" parent="WinScreen/Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = -5
+
+[node name="StarSlot" type="TextureRect" parent="WinScreen/Panel/VBoxContainer/Stars"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_kkvbj")
+
+[node name="Star" type="TextureRect" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_top = -48.0
+offset_right = 48.0
+texture = SubResource("AtlasTexture_l6bn3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot"]
+libraries = {
+"": SubResource("AnimationLibrary_nh1r5")
+}
+
+[node name="StarSlot2" type="TextureRect" parent="WinScreen/Panel/VBoxContainer/Stars"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_kkvbj")
+
+[node name="Star" type="TextureRect" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot2"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_top = -48.0
+offset_right = 48.0
+texture = SubResource("AtlasTexture_l6bn3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot2"]
+libraries = {
+"": SubResource("AnimationLibrary_nh1r5")
+}
+
+[node name="StarSlot3" type="TextureRect" parent="WinScreen/Panel/VBoxContainer/Stars"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_kkvbj")
+
+[node name="Star" type="TextureRect" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot3"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_top = -48.0
+offset_right = 48.0
+texture = SubResource("AtlasTexture_l6bn3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot3"]
+libraries = {
+"": SubResource("AnimationLibrary_nh1r5")
+}
+
+[node name="YourScoreLabel" type="Label" parent="WinScreen/Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Your score: %d bytes"
+horizontal_alignment = 1
+
+[node name="HighScoreLabel" type="Label" parent="WinScreen/Panel/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "World record: %d bytes"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="WinScreen/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WinScreen/Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 25
+
+[node name="TryAgainBtn" type="Button" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Try Again"
+
+[node name="NextPuzzleBtn" type="Button" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Next Task"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WinScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_je80h")
+}
+
+[node name="ConfirmBack" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.729412)
+script = ExtResource("8_u1hl1")
+
+[node name="Panel" type="Panel" parent="ConfirmBack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.3
+anchor_right = 0.8
+anchor_bottom = 0.7
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f14dq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmBack/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ConfirmBack/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "ARE YOU SURE?
+
+Quitting will lose your progress."
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ConfirmBack/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmBack/Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 25
+
+[node name="CancelBtn" type="Button" parent="ConfirmBack/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Cancel"
+
+[node name="QuitBtn" type="Button" parent="ConfirmBack/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Quit"
+
+[connection signal="pressed" from="Controller/Sidebar/Submit" to="Controller" method="_on_submit_pressed"]
+[connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/TryAgainBtn" to="Controller" method="_on_try_again_btn_pressed"]
+[connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/NextPuzzleBtn" to="Controller" method="_on_next_puzzle_btn_pressed"]
+[connection signal="pressed" from="ConfirmBack/Panel/VBoxContainer/MarginContainer/HBoxContainer/CancelBtn" to="ConfirmBack" method="_on_cancel_btn_pressed"]
+[connection signal="pressed" from="ConfirmBack/Panel/VBoxContainer/MarginContainer/HBoxContainer/QuitBtn" to="ConfirmBack" method="_on_quit_btn_pressed"]
