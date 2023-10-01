@@ -453,6 +453,8 @@ mouse_filter = 1
 bbcode_enabled = true
 autowrap_mode = 1
 
+[node name="HTTPRequest" type="HTTPRequest" parent="Controller"]
+
 [node name="WinScreen" type="ColorRect" parent="."]
 visible = false
 modulate = Color(1, 1, 1, 0)
@@ -557,7 +559,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "World record: %d bytes"
+text = "World record: %s bytes"
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="WinScreen/Panel/VBoxContainer"]

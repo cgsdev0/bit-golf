@@ -102,6 +102,7 @@ func collapse(arr):
 	return arr.filter(func(d): return d is String || d.count > 0)
 	
 @onready var original_text = $%YourScoreLabel.text
+@onready var original_text2 = $%HighScoreLabel.text
 
 func update_score(this_is_dumb_but_its_a_game_jam_so_its_ok_smile = false):
 	var input = $%RawText.get_parsed_text().replace('\u200b', '').length()
@@ -136,6 +137,23 @@ func update_score(this_is_dumb_but_its_a_game_jam_so_its_ok_smile = false):
 		"quota1_color": quota_color[1], 
 		"quota2_color": quota_color[2], 
 		})
+	if this_is_dumb_but_its_a_game_jam_so_its_ok_smile:
+		$%HighScoreLabel.hide()
+		var low_score = 0
+		$HTTPRequest.request("https://ld54.badcop.games/score/" + str(Events.puzzle_index) + "?score=" + str(output + cost), PackedStringArray(), HTTPClient.METHOD_POST)
+		var stuff = await $HTTPRequest.request_completed
+		var result = stuff[0]
+		var response_code = stuff[1]
+		var headers = stuff[2]
+		var body = stuff[3]
+		if response_code != 200:
+			return
+		var text = body.get_string_from_utf8()
+		if text == "NaN":
+			return
+		$%HighScoreLabel.text = original_text2 % text
+		$%HighScoreLabel.show()
+		
 	
 func render():
 	var new_text = ""
