@@ -50,6 +50,7 @@ func find_selected():
 	return null
 	
 func reset():
+	$%NewColor.show()
 	colors_mut = colors.duplicate()
 	for child in get_children():
 		if is_instance_of(child, PaletteItem):
