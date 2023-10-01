@@ -26,8 +26,11 @@ func new_color():
 	select(idx)
 	if idx == 7:
 		$%NewColor.hide()
+	$%Controller.render()
 
 func select(index: int):
+	if index >= get_child_count() - 1:
+		return
 	for item in get_children():
 		if is_instance_of(item, PaletteItem):
 			item.selected = false
@@ -51,6 +54,13 @@ func get_palette_cost():
 	for item in get_children():
 		if is_instance_of(item, PaletteItem):
 			cost += item.text.length()
+	var count = get_child_count() - 1
+	if count > 0:
+		cost += 1
+	if count > 2:
+		cost += 1
+	if count > 4:
+		cost += 1
 	return cost
 	
 func add_span(idx: int, n: int):

@@ -53,6 +53,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
+bbcode_enabled = true
 text = "Bytes:
 10 -> 8
 
