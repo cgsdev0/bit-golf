@@ -48,6 +48,10 @@ humans who achieve better compression rates will be incentivized accordingly. pl
 		"quota": [10, 20, 30]
 	},
 	{
+		"puzzle": "1 / 7 is approximately 0.142857142857142857142857142857142857142857142857142857142857142857142857142857 ...",
+		"quota": [50, 55, 60]
+	},
+	{
 		"puzzle": "how much wood could a woodchuck chuck if a woodchuck could chuck wood?",
 		"quota": [25, 30, 34]
 	},
@@ -74,12 +78,8 @@ humans who achieve better compression rates will be incentivized accordingly. pl
 		"quota": [30, 33, 35]
 	},
 	{
-		"puzzle": "1 / 7 is approximately 0.142857142857142857142857142857142857142857142857142857142857142857142857142857 ...",
-		"quota": [30, 33, 35]
-	},
-	{
 		"puzzle": "shy3asdfshy3asdf3w5gwwfg56shy3asdfqqr9074220Fi59walFi59walFi59walFi59walFi59walFi59walf4q34q3asdfqq204q34q4q34qa345w35gsqqr90742shy3asdfq",
-		"quota": [25, 30, 35]	
+		"quota": [36, 40, 44]	
 	},
 	{
 		"puzzle": "1111111111111231111111111111111111111111111111112222222222222222221231222222222222222222222222222222233333333333333333333333323133333333333333",
@@ -120,4 +120,8 @@ func try_again():
 	
 func next_puzzle():
 	puzzle_index += 1
-	self.puzzle_change.emit()
+	if puzzle_index >= Events.puzzles.size():
+		puzzle_index -= 1
+		get_tree().change_scene_to_file("res://main.tscn")
+	else:
+		self.puzzle_change.emit()

@@ -401,6 +401,9 @@ layout_mode = 2
 focus_mode = 0
 text = "SUBMIT"
 
+[node name="VSeparator" type="VSeparator" parent="Controller"]
+layout_mode = 2
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Controller"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -433,6 +436,13 @@ color = Color(0, 0.745098, 0.917647, 0.431373)
 libraries = {
 "": SubResource("AnimationLibrary_3ujpg")
 }
+
+[node name="MarginContainer" type="MarginContainer" parent="Controller/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = -5
+
+[node name="HSeparator" type="HSeparator" parent="Controller/VBoxContainer/MarginContainer"]
+layout_mode = 2
 
 [node name="Compressed" type="RichTextLabel" parent="Controller/VBoxContainer"]
 unique_name_in_owner = true
@@ -609,7 +619,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "ARE YOU SURE?
 
-Quitting will lose your progress."
+Quitting may lose some progress."
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="ConfirmBack/Panel/VBoxContainer"]
