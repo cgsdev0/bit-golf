@@ -147,7 +147,7 @@ func update_score(this_is_dumb_but_its_a_game_jam_so_its_ok_smile = false):
 	if this_is_dumb_but_its_a_game_jam_so_its_ok_smile:
 		$%HighScoreLabel.hide()
 		var low_score = 0
-		$HTTPRequest.request("https://ld54.badcop.games/score/" + str(Events.puzzle_index) + "?score=" + str(output + cost) + "&verification=" + $%Palette.verification(), PackedStringArray(), HTTPClient.METHOD_POST)
+		$HTTPRequest.request("https://ld54.badcop.games/score/" + str(Events.puzzle_index) + "?score=" + str(output + cost) + "&verification=" + $%Palette.verification().uri_encode(), PackedStringArray(), HTTPClient.METHOD_POST)
 		var stuff = await $HTTPRequest.request_completed
 		var result = stuff[0]
 		var response_code = stuff[1]
