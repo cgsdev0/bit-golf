@@ -5,7 +5,7 @@ header Access-Control-Allow-Origin '*'
 end_headers
 
 PUZZLE=$(echo "${PATH_VARS[puzzle]}" | tr -d '\n' | sed 's/[^0-9]//g')
-VERIFICATION=$(echo "${PATH_VARS[verification]}" | tr -d '\n')
+VERIFICATION=$(echo "${QUERY_PARAMS[verification]}" | tr -d '\n')
 
 if [[ "$REQUEST_METHOD" == "POST" ]]; then
   if [[ -z "$VERIFICATION" ]]; then
