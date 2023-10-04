@@ -28,6 +28,13 @@ func new_color():
 		$%NewColor.hide()
 	$%Controller.render()
 
+func verification():
+	var verif = ""
+	for item in get_children():
+		if is_instance_of(item, PaletteItem):
+			verif += item.text.replace('\n', '↲') + "\n"
+	return Marshalls.utf8_to_base64(verif)
+	
 func select(index: int):
 	if index >= get_child_count() - 1:
 		return
