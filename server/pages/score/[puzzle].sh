@@ -13,4 +13,4 @@ if [[ "$REQUEST_METHOD" == "POST" ]]; then
 fi
 
 set -o pipefail
-sort -n data/$PUZZLE | head -n 1 | cut -d' ' -f1 || echo NaN
+sort -n data/$PUZZLE | head -n 1 | cut -d' ' -f1
