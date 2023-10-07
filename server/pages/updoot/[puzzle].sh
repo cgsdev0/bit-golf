@@ -15,7 +15,7 @@ if [[ "$REQUEST_METHOD" != "POST" ]]; then
 fi
 
 cat "data/updoots/$PUZZLE" - <<< "${HTTP_HEADERS[cf-connecting-ip]}" \
-  | sort -u | sponge > "data/updoots/$PUZZLE"
+  sort -u | sponge "data/updoots/$PUZZLE"
 
 echo "ok"
 return $(status_code 200)
