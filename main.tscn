@@ -39,7 +39,6 @@ size_flags_horizontal = 5
 size_flags_vertical = 3
 
 [node name="Default Levels" type="ScrollContainer" parent="VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 horizontal_scroll_mode = 0
 
@@ -55,6 +54,7 @@ size_flags_horizontal = 4
 columns = 5
 
 [node name="User Levels" type="ScrollContainer" parent="VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="CenterContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/User Levels"]

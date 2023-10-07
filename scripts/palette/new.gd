@@ -15,7 +15,7 @@ func _process(delta):
 	else:
 		show()
 		
-	if Events.puzzle_index != 0 || Events.editor:
+	if Events.puzzle_index != 0 || Events.editor || Events.get_unlock_index() > 0:
 		$AnimationPlayer.stop()
 		%Tutor.hide()
 		return

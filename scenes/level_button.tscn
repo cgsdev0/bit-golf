@@ -19,7 +19,7 @@ resource_local_to_scene = true
 atlas = ExtResource("1_chrj1")
 region = Rect2(0, 0, 48, 48)
 
-[node name="Control" type="Button"]
+[node name="Control2" type="Button"]
 custom_minimum_size = Vector2(70, 70)
 offset_right = 60.0
 offset_bottom = 40.0
