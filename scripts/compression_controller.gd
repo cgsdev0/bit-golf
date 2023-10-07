@@ -7,17 +7,34 @@ extends Control
 var puzzle = null
 var raw_text
 
-var score_string = """Bytes:
-{input} -> {output}
+const MAX_BYTES = 512
 
-Compressed: {ratio}%
-Quota: [color={quota0_color}]{quota0}[/color][color={cc_str}]/[/color][color={quota1_color}]{quota1}[/color][color={cc_str}]/[/color][color={quota2_color}]{quota2}[/color][color={cc_str}]%[/color]
+var score_string = """ Bytes:
+ {input} -> {output}
+
+ Quota: 
+ [color={quota0_color}]{quota0}[/color][color={cc_str}]/[/color][color={quota1_color}]{quota1}[/color][color={cc_str}]/[/color][color={quota2_color}]{quota2}[/color]
+"""
+
+var verify_string = """ 
+
+
+ Bytes:
+ {input} -> {output}
+"""
+
+var editor_string = """ 
+
+
+ Bytes:
+ [color={limit_color}]{bytes} / {byte_limit}[/color]
 """
 
 var cc_str = "#75715e"
 var comment_color = Color.from_string(cc_str, Color.WHITE)
 
 var stars = 0
+var bytes = -1
 
 func reset_stars():
 	$%Stars/StarSlot/AnimationPlayer.play("RESET")
@@ -26,6 +43,9 @@ func reset_stars():
 	
 var star_volume = 8.0
 func drop_stars(n: int):
+	%Stars/StarSlot/Star.texture.region.position.x = 48
+	%Stars/StarSlot2/Star.texture.region.position.x = 48
+	%Stars/StarSlot3/Star.texture.region.position.x = 48
 	$%Stars/StarSlot/Ding.volume_db = star_volume
 	$%Stars/StarSlot2/Ding.volume_db = star_volume
 	$%Stars/StarSlot3/Ding.volume_db = star_volume
@@ -43,21 +63,25 @@ func drop_stars(n: int):
 		
 func _ready():
 	Events.puzzle_change.connect(_on_puzzle_change)
+	Events.puzzle_retry.connect(_on_puzzle_change.bind(false))
 	_on_puzzle_change()
 	
-func _on_puzzle_change():
-	puzzle = Events.puzzles[Events.puzzle_index]
-	stars = 0
-	$%Palette.reset()
+func _on_puzzle_change(clear_palette = true):
+	if Events.custom_level:
+		%Like.show()
+		puzzle = Events.custom_levels[Events.custom_level_key]
+	else:
+		%Like.hide()
+		puzzle = Events.puzzles[Events.puzzle_index]
+
+	if clear_palette:
+		stars = 0
+		bytes = -1
+		%Palette.reset()
 	raw_text = puzzle.puzzle
 	$VBoxContainer/RawText.text = raw_text
 	$VBoxContainer/Compressed.text = raw_text
 	render()
-		
-func _input(event):
-	if event.is_action_pressed("ui_accept") && OS.is_debug_build():
-		Events.next_puzzle()
-		
 		
 func add_span(idx: int, n: int):
 	$%Palette.add_span(idx, min(12, n))
@@ -111,55 +135,103 @@ func collapse(arr):
 @onready var original_text = $%YourScoreLabel.text
 @onready var original_text2 = $%HighScoreLabel.text
 
+
+@onready var editor_elements = [%TextEdit.get_parent(), %Continue]
+@onready var game_elements = [%Submit, %RawText, %Compressed, %Divider]
+
+func get_quotas():
+	return [bytes + 2, bytes + 1, bytes]
+	
+func toggle_editor_view(on):
+	for item in editor_elements:
+		item.visible = on
+	for item in game_elements:
+		item.visible = !on
+	%Edit.visible = Events.editor_verifying
+		
+func update_editor():
+	if !Events.editor || Events.editor_verifying:
+		return
+	var by = %TextEdit.text.length()
+	%ScoreLabel.text = editor_string.format({
+			"bytes": by,
+			"byte_limit": MAX_BYTES,
+			"limit_color": "white" if by < MAX_BYTES else "red"
+		})
+	toggle_editor_view(true)
+	%Continue.disabled = !(by <= MAX_BYTES && by > 0)
+	
 func update_score(this_is_dumb_but_its_a_game_jam_so_its_ok_smile = false):
+	if Events.editor && !Events.editor_verifying:
+		return
+	toggle_editor_view(false)
 	var input = $%RawText.get_parsed_text().replace('\u200b', '').length()
 	var output = $%Compressed.get_parsed_text().length()
 	var cost = $%Palette.get_palette_cost()
 	if this_is_dumb_but_its_a_game_jam_so_its_ok_smile:
+		%Sparkles.emitting = false
+		%Sparkles.hide()
 		$%YourScoreLabel.text = original_text % (output + cost)
-	var ratio = 100 - round(float(output + cost) / input * 100.0)
 	var quota_color = ["red", cc_str, cc_str]
 	stars = 0
-	if ratio >= puzzle.quota[0]:
+	bytes = output + cost
+	if output + cost <= puzzle.quota2[0]:
 		quota_color = ["green", "red", cc_str]
 		stars += 1
-	if ratio >= puzzle.quota[1]:
+	if output + cost <= puzzle.quota2[1]:
 		quota_color = ["green", "green", "red"]
 		stars += 1
-	if ratio >= puzzle.quota[2]:
+	if output + cost <= puzzle.quota2[2]:
 		quota_color = ["green", "green", "green"]
 		stars += 1
 		
-	$%Submit.disabled = ratio < puzzle.quota[0]
+	if Events.editor_verifying:
+		$%Submit.disabled = output + cost >= input - 2
+	else:
+		$%Submit.disabled = output + cost > puzzle.quota2[0]
 		
-	$%ScoreLabel.text = score_string.format({
+	$%ScoreLabel.text = (verify_string if Events.editor_verifying else score_string).format({
 		"input": input, 
 		"output": output + cost, 
-		"ratio": ratio,
-		"quota0": puzzle.quota[0],
-		"quota1": puzzle.quota[1],
-		"quota2": puzzle.quota[2],
+		"quota0": puzzle.quota2[0],
+		"quota1": puzzle.quota2[1],
+		"quota2": puzzle.quota2[2],
 		"cc_str": cc_str,
 		"quota0_color": quota_color[0], 
 		"quota1_color": quota_color[1], 
 		"quota2_color": quota_color[2], 
 		})
 	if this_is_dumb_but_its_a_game_jam_so_its_ok_smile:
-		$%HighScoreLabel.hide()
+		%HighScoreLabel.text = "Loading world record..."
 		var low_score = 0
-		$HTTPRequest.request("https://ld54.badcop.games/score/" + str(Events.puzzle_index) + "?score=" + str(output + cost) + "&verification=" + $%Palette.verification().uri_encode(), PackedStringArray(), HTTPClient.METHOD_POST)
+		var path = "score/user/" if Events.custom_level else "score/"
+		$HTTPRequest.request(Events.base_url() + path + Events.get_puzzle_id() + "?score=" + str(output + cost) + "&verification=" + $%Palette.verification().uri_encode(), PackedStringArray(), HTTPClient.METHOD_POST)
 		var stuff = await $HTTPRequest.request_completed
 		var result = stuff[0]
 		var response_code = stuff[1]
 		var headers = stuff[2]
 		var body = stuff[3]
-		if response_code != 200:
+		if result != 0 or response_code != 200:
+			%HighScoreLabel.text = "Network error :("
 			return
 		var text = body.get_string_from_utf8()
 		if text == "NaN":
+			%HighScoreLabel.text = "Network error :("
 			return
 		$%HighScoreLabel.text = original_text2 % text
-		$%HighScoreLabel.show()
+		if text == str(bytes) && stars >= 3:
+			if !$Timer.is_stopped():
+				await $Timer.timeout
+			%Sparkles.show()
+			%Sparkles.emitting = true
+			%Burst.emitting = true
+			%Stars/StarSlot/Star.texture.region.position.x = 96
+			%Stars/StarSlot2/Star.texture.region.position.x = 96
+			%Stars/StarSlot3/Star.texture.region.position.x = 96
+			$%Stars/StarSlot/Ding.play()
+			$%Stars/StarSlot2/Ding.play()
+			$%Stars/StarSlot3/Ding.play()
+
 		
 	
 func render():
@@ -211,6 +283,7 @@ func render():
 				$VBoxContainer/Compressed.append_text("%02d" % item.count)
 			$VBoxContainer/Compressed.pop()
 	update_score()
+	update_editor()
 
 
 func _on_try_again_btn_pressed():
@@ -222,12 +295,41 @@ func _on_next_puzzle_btn_pressed():
 
 
 func _on_submit_pressed():
-	update_score(true)
-	if Events.puzzle_index == Events.stars.size():
-		Events.stars.push_back(stars)
+	if Events.editor_verifying:
+		%PublishScreen/AnimationPlayer.play("fade_in")
 	else:
-		Events.stars[Events.puzzle_index] = max(Events.stars[Events.puzzle_index], stars)
-	Events.save_game()
-	Events.win_level.emit()
-	await get_tree().create_timer(0.5).timeout
-	drop_stars(stars)
+		%Burst.emitting = false
+		update_score(true)
+		$Timer.start(2.0)
+		Events.save_level(%Palette.verification(), bytes)
+		Events.win_level.emit()
+		await get_tree().create_timer(0.5).timeout
+		drop_stars(stars)
+
+
+func _on_text_edit_text_changed():
+	update_editor()
+
+
+func _on_continue_pressed():
+	Events.editor_verifying = true
+	raw_text = %TextEdit.text.replace("\t", "    ")
+	render()
+
+
+func _on_edit_pressed():
+	Events.editor_verifying = false
+	update_editor()
+
+
+func _on_cancel_pressed():
+	%PublishScreen/AnimationPlayer.play("fade_out")
+
+
+func _on_like_pressed():
+	%Like/Burst.emitting = true
+	%Like.disabled = true
+	%Like/Clink.play()
+	%Like/HTTPRequest.request(Events.base_url() + "updoot/" + str(Events.custom_level_key))
+	await get_tree().create_timer(0.2).timeout
+	%Like/Updoot.play_random()

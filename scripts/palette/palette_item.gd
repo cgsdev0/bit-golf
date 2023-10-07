@@ -51,8 +51,6 @@ func _process(delta):
 		flash_hint()
 		
 func _input(event):
-	if event.is_action_pressed("delete") && selected:
-		delete_me()
 	if event is InputEventMouseMotion && dragging:
 		var diff = (get_global_mouse_position() - drag_offset).y
 		if abs(diff) > get_rect().size.y:

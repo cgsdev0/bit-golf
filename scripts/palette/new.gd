@@ -10,9 +10,14 @@ func _ready():
 var oneshot = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Events.puzzle_index > 0:
+	if Events.editor && !Events.editor_verifying:
+		hide()
+	else:
+		show()
+		
+	if Events.puzzle_index != 0 || Events.editor:
 		$AnimationPlayer.stop()
-		$%Tutor.hide()
+		%Tutor.hide()
 		return
 	if $%Palette.get_child_count() > 1:
 		$AnimationPlayer.get_animation("flash").loop_mode = 0

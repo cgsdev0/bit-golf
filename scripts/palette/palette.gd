@@ -14,7 +14,7 @@ var colors = [
 
 var colors_mut = colors.duplicate()
 
-func new_color():
+func new_color(text = "", rle = false):
 	var palette_item = preload("res://scenes/palette_item.tscn")
 	var new_item = palette_item.instantiate()
 	
@@ -24,16 +24,20 @@ func new_color():
 	add_child(new_item)
 	move_child(new_item, idx)
 	select(idx)
+	new_item.text = text
+	new_item.rle = rle
 	if idx == 7:
 		$%NewColor.hide()
 	$%Controller.render()
 
 func verification():
-	var verif = ""
+	var verif = []
 	for item in get_children():
 		if is_instance_of(item, PaletteItem):
-			verif += item.text.replace('\n', '↲') + "\n"
-	return Marshalls.utf8_to_base64(verif)
+			var v = "1" if item.rle else "0"
+			v += item.text.replace('\n', '↲')
+			verif.push_back(v)
+	return Marshalls.utf8_to_base64("\n".join(PackedStringArray(verif)))
 	
 func select(index: int):
 	if index >= get_child_count() - 1:
@@ -57,6 +61,16 @@ func find_selected():
 			return item
 	return null
 	
+func attempt_hydration():
+	var verified = Events.get_palette_verification()
+	if !verified:
+		return
+	
+	var pal = Marshalls.base64_to_utf8(verified)
+	for item in pal.split('\n'):
+		var encoding_type = item.substr(0, 1)
+		new_color(item.substr(1).replace('↲', '\n'), encoding_type == "1")
+	
 func reset():
 	$%NewColor.show()
 	colors_mut = colors.duplicate()
@@ -64,6 +78,8 @@ func reset():
 		if is_instance_of(child, PaletteItem):
 			remove_child(child)
 			child.queue_free()
+	if !Events.editor:
+		attempt_hydration()
 			
 func play_pop():
 	$%NewColor/Pop.play_random()

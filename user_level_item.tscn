@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7nm7i6kox8cx"]
+
+[ext_resource type="Script" path="res://scripts/user_level_item.gd" id="1_4u6v3"]
+[ext_resource type="Texture2D" uid="uid://c3tjlwq51vqap" path="res://sprites/stars.png" id="1_6bqmv"]
+[ext_resource type="Script" path="res://scripts/button_juice.gd" id="2_ijyte"]
+[ext_resource type="PackedScene" uid="uid://46dsnwl3xiw6" path="res://scenes/sparkles.tscn" id="3_xvxfn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xo4cc"]
+atlas = ExtResource("1_6bqmv")
+region = Rect2(0, 0, 48, 48)
+
+[node name="MarginContainer" type="MarginContainer"]
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 4
+script = ExtResource("1_4u6v3")
+
+[node name="Control" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Likes" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "4 likes"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 2
+theme_override_constants/separation = -5
+
+[node name="Name" type="Label" parent="Control/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "somefile.txt"
+
+[node name="Subtitle" type="Label" parent="Control/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Uploaded 10/4/2023"
+
+[node name="Stars" type="HBoxContainer" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = -3
+
+[node name="TextureRect2" type="TextureRect" parent="Control/Stars"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = SubResource("AtlasTexture_xo4cc")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TextureRect3" type="TextureRect" parent="Control/Stars"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = SubResource("AtlasTexture_xo4cc")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TextureRect4" type="TextureRect" parent="Control/Stars"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = SubResource("AtlasTexture_xo4cc")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Sparkles" parent="Control/Stars" instance=ExtResource("3_xvxfn")]
+unique_name_in_owner = true
+position = Vector2(44, 18)
+emission_rect_extents = Vector2(40, 10)
+metadata/_edit_pinned_properties_ = [&"emission_rect_extents"]
+
+[node name="Button" type="Button" parent="Control"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Play"
+script = ExtResource("2_ijyte")
+
+[connection signal="pressed" from="Control/Button" to="." method="_on_button_pressed"]

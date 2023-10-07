@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1vw11a583ujv"]
+[gd_scene load_steps=7 format=3 uid="uid://c1vw11a583ujv"]
 
 [ext_resource type="Texture2D" uid="uid://c3tjlwq51vqap" path="res://sprites/stars.png" id="1_chrj1"]
 [ext_resource type="Script" path="res://scripts/level_button.gd" id="1_wjbds"]
+[ext_resource type="PackedScene" uid="uid://46dsnwl3xiw6" path="res://scenes/sparkles.tscn" id="3_oqv2e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86wvd"]
 resource_local_to_scene = true
@@ -65,5 +66,7 @@ mouse_filter = 2
 texture = SubResource("AtlasTexture_17h2b")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="Sparkles" parent="." instance=ExtResource("3_oqv2e")]
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

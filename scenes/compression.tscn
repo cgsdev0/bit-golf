@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://i5glok4afuen"]
+[gd_scene load_steps=47 format=3 uid="uid://i5glok4afuen"]
 
 [ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_lmp5r"]
 [ext_resource type="Script" path="res://scripts/palette/palette.gd" id="2_7s8ai"]
@@ -24,6 +24,12 @@
 [ext_resource type="AudioStream" uid="uid://bhh57300ea24q" path="res://sounds/star1.wav" id="21_3lihj"]
 [ext_resource type="AudioStream" uid="uid://22ki5cav18n" path="res://sounds/star2.wav" id="22_s4g4q"]
 [ext_resource type="AudioStream" uid="uid://0d4vnb8aqw4i" path="res://sounds/star3.wav" id="23_hrfhv"]
+[ext_resource type="AudioStream" uid="uid://l70c6h5hrs1e" path="res://sounds/updoot1.wav" id="24_jdxej"]
+[ext_resource type="PackedScene" uid="uid://46dsnwl3xiw6" path="res://scenes/sparkles.tscn" id="24_ty82g"]
+[ext_resource type="Script" path="res://scripts/publish.gd" id="25_ap3y7"]
+[ext_resource type="AudioStream" uid="uid://c0sjn7wyy3f66" path="res://sounds/updoot2.wav" id="25_iiofs"]
+[ext_resource type="AudioStream" uid="uid://dq8ei6fhy0e0j" path="res://sounds/updoot3.wav" id="26_racie"]
+[ext_resource type="AudioStream" uid="uid://7m051n7ump0a" path="res://sounds/updoot_back.wav" id="27_6yph0"]
 
 [sub_resource type="Animation" id="Animation_5yyxf"]
 resource_name = "flash"
@@ -344,6 +350,18 @@ tracks/2/keys = {
 "method": &"reset_stars"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("%Burst:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_je80h"]
 _data = {
@@ -431,11 +449,33 @@ text = "Bytes:
 Compressed: 95%
 Quota:      10%"
 
-[node name="Submit" type="Button" parent="Controller/Sidebar"]
+[node name="MarginContainer" type="MarginContainer" parent="Controller/Sidebar"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Controller/Sidebar/MarginContainer"]
+layout_mode = 2
+
+[node name="Edit" type="Button" parent="Controller/Sidebar/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "EDIT"
+script = ExtResource("17_jggeb")
+
+[node name="Submit" type="Button" parent="Controller/Sidebar/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 text = "SUBMIT"
+script = ExtResource("17_jggeb")
+
+[node name="Continue" type="Button" parent="Controller/Sidebar/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "CONTINUE"
 script = ExtResource("17_jggeb")
 
 [node name="VSeparator" type="VSeparator" parent="Controller"]
@@ -445,14 +485,35 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="MarginContainer2" type="MarginContainer" parent="Controller/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = -5
+theme_override_constants/margin_bottom = 0
+
+[node name="TextEdit" type="TextEdit" parent="Controller/VBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 0
+placeholder_text = "type some text...."
+wrap_mode = 1
+autowrap_mode = 1
+highlight_current_line = true
+draw_tabs = true
+draw_spaces = true
+
 [node name="RawText" type="RichTextLabel" parent="Controller/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
 mouse_filter = 1
-bbcode_enabled = true
 text = "asdfasdfasdf ffffffffffffffffffffffff aaaaaaaaaaaaaaaaaaaaaaaaaa"
 autowrap_mode = 1
 selection_enabled = true
@@ -474,23 +535,28 @@ libraries = {
 "": SubResource("AnimationLibrary_3ujpg")
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="Controller/VBoxContainer"]
+[node name="Divider" type="MarginContainer" parent="Controller/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = -5
 
-[node name="HSeparator" type="HSeparator" parent="Controller/VBoxContainer/MarginContainer"]
+[node name="HSeparator" type="HSeparator" parent="Controller/VBoxContainer/Divider"]
 layout_mode = 2
 
 [node name="Compressed" type="RichTextLabel" parent="Controller/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
-bbcode_enabled = true
 autowrap_mode = 1
 
 [node name="HTTPRequest" type="HTTPRequest" parent="Controller"]
+
+[node name="Timer" type="Timer" parent="Controller"]
+one_shot = true
 
 [node name="WinScreen" type="ColorRect" parent="."]
 visible = false
@@ -603,7 +669,6 @@ horizontal_alignment = 1
 
 [node name="HighScoreLabel" type="Label" parent="WinScreen/Panel/VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 text = "World record: %s bytes"
 horizontal_alignment = 1
@@ -617,7 +682,39 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 25
 
-[node name="TryAgainBtn" type="Button" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="Like" type="Button" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "👍"
+script = ExtResource("17_jggeb")
+
+[node name="Burst" type="CPUParticles2D" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/Like"]
+position = Vector2(14, 13)
+emitting = false
+amount = 30
+lifetime = 2.5
+one_shot = true
+explosiveness = 0.95
+direction = Vector2(0, -1)
+spread = 119.06
+gravity = Vector2(0, 400)
+initial_velocity_min = 240.84
+initial_velocity_max = 466.8
+scale_amount_max = 2.0
+color = Color(1, 1, 0, 1)
+
+[node name="HTTPRequest" type="HTTPRequest" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/Like"]
+
+[node name="Updoot" type="AudioStreamPlayer" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/Like"]
+script = ExtResource("5_pbx6w")
+samples = Array[AudioStream]([ExtResource("24_jdxej"), ExtResource("25_iiofs"), ExtResource("26_racie")])
+
+[node name="Clink" type="AudioStreamPlayer" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/Like"]
+stream = ExtResource("27_6yph0")
+volume_db = 2.562
+
+[node name="TryAgainBtn2" type="Button" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 text = "Try Again"
@@ -629,10 +726,136 @@ focus_mode = 0
 text = "Next Task"
 script = ExtResource("17_jggeb")
 
+[node name="Sparkles" parent="WinScreen/Panel/VBoxContainer" instance=ExtResource("24_ty82g")]
+unique_name_in_owner = true
+visible = false
+position = Vector2(144, 50)
+amount = 32
+emission_rect_extents = Vector2(60, 15)
+metadata/_edit_pinned_properties_ = [&"emission_rect_extents", &"amount"]
+
+[node name="Burst" type="CPUParticles2D" parent="WinScreen/Panel/VBoxContainer"]
+unique_name_in_owner = true
+position = Vector2(144, 50)
+emitting = false
+amount = 45
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.99
+emission_shape = 4
+emission_points = PackedVector2Array(0, 0, -42, 0, 42, 0)
+emission_colors = PackedColorArray()
+spread = 180.0
+gravity = Vector2(0, 400)
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+scale_amount_max = 2.0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WinScreen"]
 libraries = {
 "": SubResource("AnimationLibrary_je80h")
 }
+
+[node name="PublishScreen" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.729412)
+script = ExtResource("25_ap3y7")
+
+[node name="Panel" type="Panel" parent="PublishScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f14dq")
+
+[node name="CenterContainer" type="CenterContainer" parent="PublishScreen/Panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -52.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PublishScreen/Panel/CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PublishScreen/Panel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "PUBLISH NEW LEVEL"
+horizontal_alignment = 1
+
+[node name="YourScoreLabel" type="Label" parent="PublishScreen/Panel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Enter a name for this level:"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="PublishScreen/Panel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Panel" type="Panel" parent="PublishScreen/Panel/CenterContainer/VBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="LevelName" type="LineEdit" parent="PublishScreen/Panel/CenterContainer/VBoxContainer/MarginContainer2/Panel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "level_name.txt"
+max_length = 22
+context_menu_enabled = false
+
+[node name="MarginContainer" type="MarginContainer" parent="PublishScreen/Panel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PublishScreen/Panel/CenterContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 25
+
+[node name="Cancel" type="Button" parent="PublishScreen/Panel/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Cancel"
+script = ExtResource("17_jggeb")
+
+[node name="Publish" type="Button" parent="PublishScreen/Panel/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "Publish"
+script = ExtResource("17_jggeb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PublishScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_je80h")
+}
+
+[node name="HTTPRequest" type="HTTPRequest" parent="PublishScreen"]
+timeout = 10.0
 
 [node name="ConfirmBack" type="ColorRect" parent="."]
 visible = false
@@ -693,8 +916,14 @@ focus_mode = 0
 text = "Quit"
 script = ExtResource("17_jggeb")
 
-[connection signal="pressed" from="Controller/Sidebar/Submit" to="Controller" method="_on_submit_pressed"]
-[connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/TryAgainBtn" to="Controller" method="_on_try_again_btn_pressed"]
+[connection signal="pressed" from="Controller/Sidebar/MarginContainer/VBoxContainer/Edit" to="Controller" method="_on_edit_pressed"]
+[connection signal="pressed" from="Controller/Sidebar/MarginContainer/VBoxContainer/Submit" to="Controller" method="_on_submit_pressed"]
+[connection signal="pressed" from="Controller/Sidebar/MarginContainer/VBoxContainer/Continue" to="Controller" method="_on_continue_pressed"]
+[connection signal="text_changed" from="Controller/VBoxContainer/MarginContainer2/TextEdit" to="Controller" method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/Like" to="Controller" method="_on_like_pressed"]
+[connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/TryAgainBtn2" to="Controller" method="_on_try_again_btn_pressed"]
 [connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/NextPuzzleBtn" to="Controller" method="_on_next_puzzle_btn_pressed"]
+[connection signal="pressed" from="PublishScreen/Panel/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/Cancel" to="Controller" method="_on_cancel_pressed"]
+[connection signal="pressed" from="PublishScreen/Panel/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/Publish" to="PublishScreen" method="_on_publish_pressed"]
 [connection signal="pressed" from="ConfirmBack/Panel/VBoxContainer/MarginContainer/HBoxContainer/CancelBtn" to="ConfirmBack" method="_on_cancel_btn_pressed"]
 [connection signal="pressed" from="ConfirmBack/Panel/VBoxContainer/MarginContainer/HBoxContainer/QuitBtn" to="ConfirmBack" method="_on_quit_btn_pressed"]
