@@ -16,6 +16,23 @@ rm -rf pubsub
 mkdir -p sessions
 mkdir -p pubsub
 mkdir -p data
+
+# migrate data
+if [[ ! -d data/default ]]; then
+  mkdir -p default
+  mv data/* default/.
+  rm -f data/*
+  mv default data/.
+fi
+
+for i in {0..14}; do
+  touch data/default/$i
+done
+
+mkdir -p data/user
+mkdir -p data/user_scores
+mkdir -p data/updoots
+
 mkdir -p uploads
 
 PORT=${PORT:-3000}
