@@ -140,7 +140,10 @@ func collapse(arr):
 @onready var game_elements = [%Submit, %RawText, %Compressed, %Divider]
 
 func get_quotas():
-	return [bytes + 2, bytes + 1, bytes]
+	var diff = raw_text.length() - bytes
+	var quota0 = max(bytes + 2, bytes + floor(diff / 2))
+	var quota1 = max(bytes + 1, bytes + floor(diff / 4))
+	return [quota0, quota1, bytes]
 	
 func toggle_editor_view(on):
 	for item in editor_elements:
