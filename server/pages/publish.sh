@@ -34,6 +34,7 @@ echo "${HTTP_HEADERS[cf-connecting-ip]}" > "data/updoots/$FILE_TAG"
 cat > ${FILE_ID} <<-EOF
 {"name":"$NAME","date":"$(date "+%m/%d/%Y")","quota0":$QUOTA0,"quota1":$QUOTA1,"quota2":$QUOTA2,"puzzle":"$PUZZLE_DATA"}
 $VERIFICATION
+${HTTP_HEADERS[cf-connecting-ip]}
 EOF
 
 echo "$FILE_TAG"
