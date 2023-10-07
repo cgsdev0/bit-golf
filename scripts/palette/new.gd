@@ -10,7 +10,7 @@ func _ready():
 var oneshot = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Events.editor && !Events.editor_verifying:
+	if (Events.editor && !Events.editor_verifying) || get_parent().get_child_count() > 8:
 		hide()
 	else:
 		show()
