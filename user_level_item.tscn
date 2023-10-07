@@ -1,11 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7nm7i6kox8cx"]
+[gd_scene load_steps=8 format=3 uid="uid://b7nm7i6kox8cx"]
 
 [ext_resource type="Script" path="res://scripts/user_level_item.gd" id="1_4u6v3"]
 [ext_resource type="Texture2D" uid="uid://c3tjlwq51vqap" path="res://sprites/stars.png" id="1_6bqmv"]
 [ext_resource type="Script" path="res://scripts/button_juice.gd" id="2_ijyte"]
 [ext_resource type="PackedScene" uid="uid://46dsnwl3xiw6" path="res://scenes/sparkles.tscn" id="3_xvxfn"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xo4cc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqvl3"]
+resource_local_to_scene = true
+atlas = ExtResource("1_6bqmv")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7t3g"]
+resource_local_to_scene = true
+atlas = ExtResource("1_6bqmv")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iybtm"]
+resource_local_to_scene = true
 atlas = ExtResource("1_6bqmv")
 region = Rect2(0, 0, 48, 48)
 
@@ -47,21 +58,21 @@ theme_override_constants/separation = -3
 [node name="TextureRect2" type="TextureRect" parent="Control/Stars"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-texture = SubResource("AtlasTexture_xo4cc")
+texture = SubResource("AtlasTexture_vqvl3")
 expand_mode = 1
 stretch_mode = 4
 
 [node name="TextureRect3" type="TextureRect" parent="Control/Stars"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-texture = SubResource("AtlasTexture_xo4cc")
+texture = SubResource("AtlasTexture_w7t3g")
 expand_mode = 1
 stretch_mode = 4
 
 [node name="TextureRect4" type="TextureRect" parent="Control/Stars"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-texture = SubResource("AtlasTexture_xo4cc")
+texture = SubResource("AtlasTexture_iybtm")
 expand_mode = 1
 stretch_mode = 4
 

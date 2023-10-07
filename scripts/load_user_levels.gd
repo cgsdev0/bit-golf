@@ -4,17 +4,17 @@ extends Container
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	populate_list()
-	if $usr_levels.get_child_count() <= 1:
+	if $usr_levels.get_child_count() <= 2:
 		$Loading.show()
 		$usr_levels.hide()
 	else:
 		$usr_levels.show()
 		$Loading.hide()
 	$HTTPRequest.request_completed.connect(_http_request_completed)
-	print($HTTPRequest.request(Events.base_url() + "list"))
+	$HTTPRequest.request(Events.base_url() + "list")
 
 func _http_request_completed(result, response_code, headers, body):
-	if response_code != 200:
+	if result != 0 || response_code != 200:
 		print("bad list")
 		$Loading.text = "Failed to load :("
 		return
@@ -50,14 +50,12 @@ func populate_list():
 			var new_child = preload("res://user_level_item.tscn").instantiate()
 			new_child.text = level.name
 			new_child.subtitle = "Uploaded on " + level.date
-			new_child.likes = level.likes
-			new_child.stars = Events.get_user_stars(level_key)
 			new_child.level_key = level_key
+			new_child.likes = level.likes
 			cache[level_key] = new_child
 			waiting_list.push_back(new_child)
 		else:
 			existing.likes = level.likes
-			existing.stars = Events.get_user_stars(level_key)
 			$usr_levels.remove_child(existing)
 			waiting_list.push_back(existing)
 	
@@ -71,7 +69,7 @@ func populate_list():
 	
 	# lets sort
 	waiting_list.sort_custom(
-		func(a, b): return a.likes < b.likes
+		func(a, b): return b.likes < a.likes
 	)
 	
 	for item in waiting_list:
@@ -79,6 +77,8 @@ func populate_list():
 		hsep.add_theme_constant_override("separation", 0)
 		$usr_levels.add_child(item)
 		$usr_levels.add_child(hsep)
+		item.likes = Events.custom_levels[item.level_key].likes
+		item.stars = Events.get_user_stars(item.level_key)
 		
 	waiting_list.clear()
 		

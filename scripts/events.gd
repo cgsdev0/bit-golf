@@ -49,9 +49,9 @@ func get_default_best_score(i):
 	else:
 		return 0
 	
+@onready var req = HTTPRequest.new()
+
 func load_highscores():
-	var req = HTTPRequest.new()
-	add_child(req)
 	req.request(base_url() + "score/all")
 	var stuff = await req.request_completed
 	var result = stuff[0]
@@ -69,7 +69,6 @@ func load_highscores():
 		print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
 	best_scores = json.get_data()
 	best_scores_loaded.emit()
-	req.queue_free()
 	
 func get_puzzle_id():
 	if custom_level:
@@ -77,6 +76,7 @@ func get_puzzle_id():
 	return str(puzzle_index)
 	
 func _ready():
+	add_child(req)
 	load_game()
 
 func get_user_best_score(k):

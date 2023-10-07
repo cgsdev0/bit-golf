@@ -11,7 +11,13 @@ class_name PaletteItem extends Control
 		color = value
 		$PaletteItem/HBoxContainer/Sprite2D.modulate = value
 		
-var rle: bool = false
+var rle: bool = false:
+	set (value):
+		rle = value
+		if rle:
+			$PaletteItem/HBoxContainer/Sprite2D.texture = rle_sprite
+		else:
+			$PaletteItem/HBoxContainer/Sprite2D.texture = default_sprite
 		
 var matched: bool = false
 
@@ -45,7 +51,7 @@ func flash_hint():
 	$RMBHint/AnimationPlayer.play("flash")
 	
 func _process(delta):
-	if Events.puzzle_index != 2:
+	if Events.puzzle_index != 2 || Events.get_unlock_index() > 2:
 		return
 	if text.contains("=") && !shown:
 		flash_hint()
@@ -72,9 +78,6 @@ func _gui_input(event):
 		$RLE.play()
 		if rle:
 			$RMBHint.hide()
-			$PaletteItem/HBoxContainer/Sprite2D.texture = rle_sprite
-		else:
-			$PaletteItem/HBoxContainer/Sprite2D.texture = default_sprite
 		get_parent().queue_repaint()
 	if event is InputEventMouseButton && event.button_index == 1 && event.is_pressed():
 		dragging = true
