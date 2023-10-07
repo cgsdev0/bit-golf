@@ -686,7 +686,7 @@ theme_override_constants/separation = 25
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
-text = "👍"
+text = "⏫"
 script = ExtResource("17_jggeb")
 
 [node name="Burst" type="CPUParticles2D" parent="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/Like"]

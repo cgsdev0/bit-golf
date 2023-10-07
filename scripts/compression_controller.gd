@@ -333,6 +333,6 @@ func _on_like_pressed():
 	%Like/Burst.emitting = true
 	%Like.disabled = true
 	%Like/Clink.play()
-	%Like/HTTPRequest.request(Events.base_url() + "updoot/" + str(Events.custom_level_key))
+	%Like/HTTPRequest.request(Events.base_url() + "updoot/" + str(Events.custom_level_key), PackedStringArray(), HTTPClient.METHOD_POST)
 	await get_tree().create_timer(0.2).timeout
 	%Like/Updoot.play_random()
