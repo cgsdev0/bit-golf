@@ -40,7 +40,7 @@ jobs:
           mkdir -p ./final-bundle/postjam
           find ./builds
           pushd ./builds/html
-          find . -type f | xargs -L1 basename | xargs -L1 -I {} cp {} ../final-bundle/postjam
+          find . -type f | xargs -L1 basename | xargs -L1 -I {} cp {} ../../final-bundle/postjam
           popd
           unzip ./releases/compo-initial-build.zip -d ./final-bundle/jam
           cp ./launcher.html ./final-bundle/index.html
