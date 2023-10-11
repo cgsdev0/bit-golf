@@ -2,8 +2,12 @@ extends Control
 
 
 @export var peace_and_quiet = false
+@export var use_localhost = false
 			
 func _ready():
+	if OS.is_debug_build() && use_localhost:
+		Events.use_localhost = true
+		
 	if Events.custom_level || Events.editor:
 		%TabContainer.current_tab = 1
 	Events.load_highscores()

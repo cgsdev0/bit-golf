@@ -29,10 +29,7 @@ class_name UserLevelItem extends MarginContainer
 @export var likes: int = 0:
 	set (value):
 		likes = value
-		if value == 1:
-			%Likes.text = str(value) + " like"
-		else:
-			%Likes.text = str(value) + " likes"
+		%Likes.text = " ⏫ " + "%-4d" % value
 		
 var level_key
 

@@ -10,6 +10,8 @@ var custom_levels = {}
 var editor = false
 var editor_verifying = false
 
+var use_localhost = false
+
 var best_scores = []
 
 var save_data = {
@@ -39,7 +41,7 @@ func get_palette_verification():
 	return null
 	
 func base_url():
-	if OS.is_debug_build():
+	if OS.is_debug_build() && use_localhost:
 		return "http://localhost:3035/"
 	return "https://ld54.badcop.games/"
 
@@ -293,7 +295,8 @@ signal win_level
 signal button_pressed_lol
 signal best_scores_loaded
 
-		
+signal push_undo_action(action)
+
 func try_again():
 	self.puzzle_retry.emit()
 	

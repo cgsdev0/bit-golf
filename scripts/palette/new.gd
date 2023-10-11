@@ -36,4 +36,5 @@ func _gui_input(event):
 	if event is InputEventMouseButton && event.button_index == 1 && event.is_pressed():
 		$Pop.play_random()
 		accept_event()
+		Events.push_undo_action.emit({"action": Undo.Action.NEW_COLOR, "index": get_index()})
 		get_parent().new_color()

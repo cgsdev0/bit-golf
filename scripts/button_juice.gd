@@ -6,6 +6,7 @@ class_name ButtonJuice extends Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	self.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	self.mouse_entered.connect(on_enter)
 	self.pressed.connect(on_press)
 	player.stream = preload("res://sounds/hover2.wav")

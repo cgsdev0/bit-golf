@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://i5glok4afuen"]
+[gd_scene load_steps=48 format=3 uid="uid://i5glok4afuen"]
 
 [ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_lmp5r"]
 [ext_resource type="Script" path="res://scripts/palette/palette.gd" id="2_7s8ai"]
@@ -21,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://cfkileh6bkecr" path="res://sounds/scribble4.wav" id="15_dbh6e"]
 [ext_resource type="AudioStream" uid="uid://3es0pjklagdj" path="res://sounds/scribble5.wav" id="16_hjoj8"]
 [ext_resource type="Script" path="res://scripts/button_juice.gd" id="17_jggeb"]
+[ext_resource type="Script" path="res://scripts/undo.gd" id="19_theth"]
 [ext_resource type="AudioStream" uid="uid://bhh57300ea24q" path="res://sounds/star1.wav" id="21_3lihj"]
 [ext_resource type="AudioStream" uid="uid://22ki5cav18n" path="res://sounds/star2.wav" id="22_s4g4q"]
 [ext_resource type="AudioStream" uid="uid://0d4vnb8aqw4i" path="res://sounds/star3.wav" id="23_hrfhv"]
@@ -514,6 +515,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
 mouse_filter = 1
+mouse_default_cursor_shape = 1
 text = "asdfasdfasdf ffffffffffffffffffffffff aaaaaaaaaaaaaaaaaaaaaaaaaa"
 autowrap_mode = 1
 selection_enabled = true
@@ -557,6 +559,9 @@ autowrap_mode = 1
 
 [node name="Timer" type="Timer" parent="Controller"]
 one_shot = true
+
+[node name="Undo" type="Node" parent="Controller"]
+script = ExtResource("19_theth")
 
 [node name="WinScreen" type="ColorRect" parent="."]
 visible = false

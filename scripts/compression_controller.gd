@@ -245,6 +245,8 @@ func render():
 			continue
 		if !span.text:
 			continue
+		if span.disabled:
+			continue
 		spans.push_back(span)
 	var parsed = [ raw_text ]
 	for span in spans:

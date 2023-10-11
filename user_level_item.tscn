@@ -28,7 +28,7 @@ script = ExtResource("1_4u6v3")
 
 [node name="Control" type="HBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 5
 
 [node name="Likes" type="Label" parent="Control"]
 unique_name_in_owner = true
@@ -46,6 +46,7 @@ text = "somefile.txt"
 
 [node name="Subtitle" type="Label" parent="Control/VBoxContainer"]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.352941)
 layout_mode = 2
 text = "Uploaded 10/4/2023"
 

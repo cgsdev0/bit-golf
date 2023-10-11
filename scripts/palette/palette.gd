@@ -12,14 +12,26 @@ var colors = [
 	Color.from_string("#ffb3ce", Color.WHITE)
 ]
 
+@onready var palette_item = preload("res://scenes/palette_item.tscn")
 var colors_mut = colors.duplicate()
 
-func new_color(text = "", rle = false):
-	var palette_item = preload("res://scenes/palette_item.tscn")
+func restore_color(text, rle, disabled, idx):
+	play_pop()
 	var new_item = palette_item.instantiate()
-	
 	new_item.color = colors_mut.pop_front()
+	add_child(new_item)
+	move_child(new_item, idx)
+	select(idx)
+	new_item.text = text
+	new_item.rle = rle
+	new_item.disabled = disabled
+	if idx == 7:
+		$%NewColor.hide()
+	$%Controller.render()
 	
+func new_color(text = "", rle = false):
+	var new_item = palette_item.instantiate()
+	new_item.color = colors_mut.pop_front()
 	var idx = get_child_count() - 1
 	add_child(new_item)
 	move_child(new_item, idx)
@@ -29,6 +41,7 @@ func new_color(text = "", rle = false):
 	if idx == 7:
 		$%NewColor.hide()
 	$%Controller.render()
+	return new_item
 
 func verification():
 	var verif = []
@@ -41,6 +54,8 @@ func verification():
 	
 func select(index: int):
 	if index >= get_child_count() - 1:
+		index = get_child_count() - 2
+	if index < 0:
 		return
 	for item in get_children():
 		if is_instance_of(item, PaletteItem):
@@ -86,10 +101,12 @@ func play_pop():
 	
 func get_palette_cost():
 	var cost = 0
+	var count = 0
 	for item in get_children():
-		if is_instance_of(item, PaletteItem):
+		if is_instance_of(item, PaletteItem) && !item.disabled:
 			cost += item.text.length()
-	var count = get_child_count() - 1
+			count += 1
+
 	if count > 0:
 		cost += 1
 	if count > 2:
@@ -100,8 +117,15 @@ func get_palette_cost():
 	
 func add_span(idx: int, n: int):
 	var selected = find_selected()
-	if selected != null:
-		$NewColor/Scribble.play_random()
-		selected.text = $%Controller.raw_text.substr(idx, n)
-		if selected.text == "compress" && Events.puzzle_index == 0:
-			$%Tutor/AnimationPlayer.play('fade_out')
+	if selected == null:
+		selected = new_color()
+
+	var new_text = $%Controller.raw_text.substr(idx, n)
+	Events.push_undo_action.emit({ "action": Undo.Action.SELECT_TEXT, "index": selected.get_index(), "new": new_text, "old": selected.text })
+	change_text(selected, new_text)
+
+func change_text(node, new_text):
+	$NewColor/Scribble.play_random()
+	node.text = new_text
+	if node.text == "compress" && Events.puzzle_index == 0:
+		$%Tutor/AnimationPlayer.play('fade_out')
