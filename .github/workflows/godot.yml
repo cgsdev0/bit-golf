@@ -1,0 +1,37 @@
+name: Build Godot Project
+
+on:
+  # push:
+  #   branches: [ 'main' ]
+  workflow_dispatch: {}
+
+jobs:
+  export_web:
+    name: Export
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      - name: Export Game
+        id: export
+        # Use latest version (see releases for all versions)
+        uses: firebelley/godot-export@v5.0.0
+        with:
+          # Defining all the required inputs
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.1.1/Godot_v4.1.1-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.1.1/Godot_v4.1.1-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: false
+          use_preset_export_path: true
+          export_debug: false
+
+      - uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{secrets.BUTLER_API_KEY}}
+          gameData: ./builds/html
+          itchUsername: badcop
+          itchGameId: dreams
+          buildChannel: html
