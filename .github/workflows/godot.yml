@@ -38,7 +38,7 @@ jobs:
           ls -la
           mkdir -p ./final-bundle/jam
           mkdir -p ./final-bundle/postjam
-          find ./builds/html
+          find ./builds
           pushd ./builds/html
           find . -type f | xargs -L1 basename | xargs -L1 -I {} cp {} ../final-bundle/postjam
           popd
