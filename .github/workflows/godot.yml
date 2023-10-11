@@ -38,8 +38,8 @@ jobs:
           ls -la
           mkdir -p ./final-bundle/jam
           mkdir -p ./final-bundle/postjam
-          ls -la ./build/html
-          cd ./build/html
+          ls -la ./builds/html
+          cd ./builds/html
           find . -type f | xargs -L1 basename | xargs -L1 -I {} cp {} ../final-bundle/postjam
           cd ..
           unzip ./releases/compo-initial-build.zip -d ./final-bundle/jam
@@ -55,21 +55,21 @@ jobs:
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
-          gameData: ./build/windows/window.zip
+          gameData: ./builds/windows/window.zip
           itchUsername: badcop
           itchGameId: dreams
           buildChannel: windows
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
-          gameData: ./build/macos/macos.zip
+          gameData: ./builds/macos/macos.zip
           itchUsername: badcop
           itchGameId: dreams
           buildChannel: macos
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
-          gameData: ./build/linux/linux.zip
+          gameData: ./builds/linux/linux.zip
           itchUsername: badcop
           itchGameId: dreams
           buildChannel: linux
