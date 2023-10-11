@@ -38,10 +38,10 @@ jobs:
           ls -la
           mkdir -p ./final-bundle/jam
           mkdir -p ./final-bundle/postjam
-          ls -la ./builds/html
-          cd ./builds/html
+          find ./builds/html
+          pushd ./builds/html
           find . -type f | xargs -L1 basename | xargs -L1 -I {} cp {} ../final-bundle/postjam
-          cd ..
+          popd
           unzip ./releases/compo-initial-build.zip -d ./final-bundle/jam
           cp ./launcher.html ./final-bundle/index.html
           cp ./fonts/PixelOperatorMono.ttf ./final-bundle/.
