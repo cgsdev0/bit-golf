@@ -55,7 +55,7 @@ jobs:
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
-          gameData: ./builds/windows/window.zip
+          gameData: ./builds/windows/windows.zip
           itchUsername: badcop
           itchGameId: dreams
           buildChannel: windows
@@ -69,7 +69,7 @@ jobs:
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
-          gameData: ./builds/linux/linux.zip
+          gameData: ./builds/linux/linux_x86_64.zip
           itchUsername: badcop
           itchGameId: dreams
           buildChannel: linux
