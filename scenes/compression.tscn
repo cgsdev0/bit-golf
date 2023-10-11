@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://i5glok4afuen"]
+[gd_scene load_steps=52 format=3 uid="uid://i5glok4afuen"]
 
 [ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_lmp5r"]
 [ext_resource type="Script" path="res://scripts/palette/palette.gd" id="2_7s8ai"]
@@ -28,6 +28,7 @@
 [ext_resource type="AudioStream" uid="uid://l70c6h5hrs1e" path="res://sounds/updoot1.wav" id="24_jdxej"]
 [ext_resource type="PackedScene" uid="uid://46dsnwl3xiw6" path="res://scenes/sparkles.tscn" id="24_ty82g"]
 [ext_resource type="Script" path="res://scripts/publish.gd" id="25_ap3y7"]
+[ext_resource type="Texture2D" uid="uid://dqu70uiqsuej0" path="res://sprites/graph.png" id="25_hi4tl"]
 [ext_resource type="AudioStream" uid="uid://c0sjn7wyy3f66" path="res://sounds/updoot2.wav" id="25_iiofs"]
 [ext_resource type="AudioStream" uid="uid://dq8ei6fhy0e0j" path="res://sounds/updoot3.wav" id="26_racie"]
 [ext_resource type="AudioStream" uid="uid://7m051n7ump0a" path="res://sounds/updoot_back.wav" id="27_6yph0"]
@@ -254,6 +255,18 @@ _data = {
 "RESET": SubResource("Animation_stnbw"),
 "fill": SubResource("Animation_egtar")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wg218"]
+atlas = ExtResource("25_hi4tl")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sicms"]
+atlas = ExtResource("25_hi4tl")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwubr"]
+atlas = ExtResource("25_hi4tl")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="Animation" id="Animation_12d5l"]
 length = 0.001
@@ -564,6 +577,7 @@ one_shot = true
 script = ExtResource("19_theth")
 
 [node name="WinScreen" type="ColorRect" parent="."]
+unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
@@ -666,17 +680,37 @@ libraries = {
 [node name="Ding" type="AudioStreamPlayer" parent="WinScreen/Panel/VBoxContainer/Stars/StarSlot3"]
 stream = ExtResource("23_hrfhv")
 
-[node name="YourScoreLabel" type="Label" parent="WinScreen/Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="WinScreen/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="WinScreen/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 2
+
+[node name="GraphBtn" type="TextureButton" parent="WinScreen/Panel/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_wg218")
+texture_pressed = SubResource("AtlasTexture_sicms")
+texture_hover = SubResource("AtlasTexture_wwubr")
+script = ExtResource("17_jggeb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WinScreen/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 0
+
+[node name="YourScoreLabel" type="Label" parent="WinScreen/Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Your score: %d bytes"
-horizontal_alignment = 1
+text = "Your score:   %d bytes"
 
-[node name="HighScoreLabel" type="Label" parent="WinScreen/Panel/VBoxContainer"]
+[node name="HighScoreLabel" type="Label" parent="WinScreen/Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "World record: %s bytes"
-horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="WinScreen/Panel/VBoxContainer"]
 layout_mode = 2
@@ -755,6 +789,27 @@ gravity = Vector2(0, 400)
 initial_velocity_min = 200.0
 initial_velocity_max = 300.0
 scale_amount_max = 2.0
+
+[node name="MarginContainer" type="MarginContainer" parent="WinScreen/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 3
+
+[node name="HistogramContainer" type="VBoxContainer" parent="WinScreen/Panel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Button" type="Button" parent="WinScreen/Panel/MarginContainer/HistogramContainer"]
+layout_mode = 2
+text = "Back"
+script = ExtResource("17_jggeb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WinScreen"]
 libraries = {
@@ -864,6 +919,7 @@ timeout = 10.0
 
 [node name="ConfirmBack" type="ColorRect" parent="."]
 visible = false
+z_index = 100
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -925,9 +981,11 @@ script = ExtResource("17_jggeb")
 [connection signal="pressed" from="Controller/Sidebar/MarginContainer/VBoxContainer/Submit" to="Controller" method="_on_submit_pressed"]
 [connection signal="pressed" from="Controller/Sidebar/MarginContainer/VBoxContainer/Continue" to="Controller" method="_on_continue_pressed"]
 [connection signal="text_changed" from="Controller/VBoxContainer/MarginContainer2/TextEdit" to="Controller" method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="WinScreen/Panel/VBoxContainer/HBoxContainer/MarginContainer/GraphBtn" to="WinScreen" method="_on_graph_btn_pressed"]
 [connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/Like" to="Controller" method="_on_like_pressed"]
 [connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/TryAgainBtn2" to="Controller" method="_on_try_again_btn_pressed"]
 [connection signal="pressed" from="WinScreen/Panel/VBoxContainer/MarginContainer/HBoxContainer/NextPuzzleBtn" to="Controller" method="_on_next_puzzle_btn_pressed"]
+[connection signal="pressed" from="WinScreen/Panel/MarginContainer/HistogramContainer/Button" to="WinScreen" method="_on_button_pressed"]
 [connection signal="pressed" from="PublishScreen/Panel/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/Cancel" to="Controller" method="_on_cancel_pressed"]
 [connection signal="pressed" from="PublishScreen/Panel/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/Publish" to="PublishScreen" method="_on_publish_pressed"]
 [connection signal="pressed" from="ConfirmBack/Panel/VBoxContainer/MarginContainer/HBoxContainer/CancelBtn" to="ConfirmBack" method="_on_cancel_btn_pressed"]

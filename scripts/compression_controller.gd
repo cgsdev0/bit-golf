@@ -175,6 +175,7 @@ func update_score(this_is_dumb_but_its_a_game_jam_so_its_ok_smile = false):
 		%Sparkles.emitting = false
 		%Sparkles.hide()
 		$%YourScoreLabel.text = original_text % (output + cost)
+		%WinScreen.bucket = output + cost
 	var quota_color = ["red", cc_str, cc_str]
 	stars = 0
 	bytes = output + cost
@@ -205,7 +206,7 @@ func update_score(this_is_dumb_but_its_a_game_jam_so_its_ok_smile = false):
 		"quota2_color": quota_color[2], 
 		})
 	if this_is_dumb_but_its_a_game_jam_so_its_ok_smile:
-		%HighScoreLabel.text = "Loading world record..."
+		%HighScoreLabel.text = "Loading..."
 		var low_score = 0
 		var path = "score/user/" if Events.custom_level else "score/"
 		$HTTPRequest.request(Events.base_url() + path + Events.get_puzzle_id() + "?score=" + str(output + cost) + "&verification=" + $%Palette.verification().uri_encode(), PackedStringArray(), HTTPClient.METHOD_POST)
