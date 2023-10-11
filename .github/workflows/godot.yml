@@ -1,8 +1,8 @@
 name: Build Godot Project
 
 on:
-  # push:
-  #   branches: [ 'main' ]
+  push:
+    branches: [ 'postjam' ]
   workflow_dispatch: {}
 
 jobs:
@@ -50,26 +50,26 @@ jobs:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
           gameData: ./final-bundle
           itchUsername: badcop
-          itchGameId: dreams
+          itchGameId: bit-golf
           buildChannel: html
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
           gameData: ./builds/windows/windows.zip
           itchUsername: badcop
-          itchGameId: dreams
+          itchGameId: bit-golf
           buildChannel: windows
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
           gameData: ./builds/macos/macos.zip
           itchUsername: badcop
-          itchGameId: dreams
+          itchGameId: bit-golf
           buildChannel: macos
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
           gameData: ./builds/linux/linux_x86_64.zip
           itchUsername: badcop
-          itchGameId: dreams
+          itchGameId: bit-golf
           buildChannel: linux
