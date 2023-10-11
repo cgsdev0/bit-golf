@@ -1,4 +1,4 @@
-class_name ButtonJuice extends Button
+class_name ButtonJuice extends BaseButton
 
 
 @onready var player = AudioStreamPlayer.new()
