@@ -19,6 +19,10 @@ fi
 
 OUTPUT="$(sort -n "data/default/$PUZZLE" | head -n 1 | cut -d' ' -f1)"
 
+if [[ "${QUERY_PARAMS[histogram]}" == "true" ]]; then
+  OUTPUT="$(cut -d' ' -f1-2 "data/default/$PUZZLE" | sort -k 2,2 -k 1,1n | uniq -f1 | cut -d' ' -f1 | sort -n | uniq -c)"
+fi
+
 header Content-Length "${#OUTPUT}"
 end_headers
 
