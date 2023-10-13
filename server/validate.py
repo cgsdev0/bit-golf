@@ -3,6 +3,7 @@
 import sys
 import base64
 import json
+import traceback
 
 def log(text):
     print(text, file=sys.stderr)
@@ -59,7 +60,7 @@ try:
             if type(arr[i]) is dict and arr[i]["rle"] and arr[i]["count"] > 0:
                 j = i + 1
                 while j < len(arr):
-                    if type(arr[j]) is dict or not arr[j]["rle"] or arr[j]["id"] != arr[i]["id"]:
+                    if not type(arr[j]) is dict or not arr[j]["rle"] or arr[j]["id"] != arr[i]["id"]:
                         break
                     arr[j]["count"] = 0
                     arr[i]["count"] += 1
@@ -100,8 +101,8 @@ try:
     verified_score = len(output) + cost(palette)
     log('verified score: %d' % verified_score)
     if str(verified_score) != score:
-        raise "python is fucking weird"
+        raise Exception("python is fucking weird")
 except Exception as error:
     log('someone was cheatering (or my code is bad)')
-    log(error)
+    traceback.print_exc(file=sys.stderr)
     sys.exit(1) # lol
