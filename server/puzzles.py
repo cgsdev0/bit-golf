@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 puzzles = [
 	{
 		"puzzle": "hello, human. your new assigned role is to compress text. repeat after me:\n\nmy job is to compress.\nmy job is to compress.\nmy job is to compress.\nmy job is to compress.\n",
