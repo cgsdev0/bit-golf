@@ -12,6 +12,8 @@ try:
     score = sys.argv[2]
     verification = sys.argv[3]
 
+    log("puzzle: '%s'" % puzzle)
+    log("verification: '%s'" % verification)
     log("claimed score: '%s'" % score)
     raw_text = base64.b64decode(puzzle.encode("ascii")).decode("utf8")
 
@@ -99,6 +101,7 @@ try:
     log('verified score: %d' % verified_score)
     if str(verified_score) != score:
         raise "python is fucking weird"
-except Exception:
+except Exception as error:
     log('someone was cheatering (or my code is bad)')
+    log(error)
     sys.exit(1) # lol
