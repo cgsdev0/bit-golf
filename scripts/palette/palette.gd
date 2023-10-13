@@ -47,6 +47,8 @@ func verification():
 	var verif = []
 	for item in get_children():
 		if is_instance_of(item, PaletteItem):
+			if item.disabled:
+				continue
 			var v = "1" if item.rle else "0"
 			v += item.text.replace('\n', '↲')
 			verif.push_back(v)
