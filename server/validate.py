@@ -78,10 +78,9 @@ try:
         if type(item) is str:
             output += item
         if type(item) is dict:
+            output += "•"
             if item["rle"]:
                 output += "%02d" % item["count"]
-            else:
-                output += "•"
 
     def cost(palette):
         cost = 0
