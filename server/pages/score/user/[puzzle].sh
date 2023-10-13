@@ -5,6 +5,7 @@ header Access-Control-Allow-Origin '*'
 
 PUZZLE=$(echo "${PATH_VARS[puzzle]}" | tr -d '\n' | sed 's/[^a-zA-Z0-9]//g')
 if [[ ! -f "data/user_scores/$PUZZLE" ]]; then
+    end_headers
     return $(status_code 404)
 fi
 VERIFICATION=$(echo "${QUERY_PARAMS[verification]}" | tr -d '\n')
@@ -12,6 +13,7 @@ if [[ "$REQUEST_METHOD" == "POST" ]]; then
   NEW_SCORE=$(echo "${QUERY_PARAMS[score]}" | tr -d '\n' | sed 's/[^0-9]//g')
   PUZZLE_TEXT="$(head -n1 data/user/$PUZZLE | jq -r '.puzzle')"
   if ! ./validate.py "$PUZZLE_TEXT" "$NEW_SCORE" "$VERIFICATION"; then
+    end_headers
     echo "invalid verification"
     return $(status_code 400)
   fi

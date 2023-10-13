@@ -5,6 +5,7 @@ header Access-Control-Allow-Origin '*'
 
 PUZZLE=$(echo "${PATH_VARS[puzzle]}" | tr -d '\n' | sed 's/[^0-9]//g')
 if [[ ! -f "data/default/$PUZZLE" ]]; then
+    end_headers
     return $(status_code 404)
 fi
 VERIFICATION=$(echo "${QUERY_PARAMS[verification]}" | tr -d '\n')
@@ -12,6 +13,7 @@ if [[ "$REQUEST_METHOD" == "POST" ]] && [[ ! -z "${HTTP_HEADERS[x-postjam]}" ]];
   NEW_SCORE=$(echo "${QUERY_PARAMS[score]}" | tr -d '\n' | sed 's/[^0-9]//g')
   PUZZLE_TEXT="$(jq -r ".\"$PUZZLE\"" default_levels.json)"
   if ! ./validate.py "$PUZZLE_TEXT" "$NEW_SCORE" "$VERIFICATION"; then
+    end_headers
     echo "invalid verification"
     return $(status_code 400)
   fi
