@@ -2,6 +2,7 @@
 
 header Content-Type 'text/plain'
 header Access-Control-Allow-Origin '*'
+header Access-Control-Allow-Headers 'x-postjam'
 
 PUZZLE=$(echo "${PATH_VARS[puzzle]}" | tr -d '\n' | sed 's/[^a-zA-Z0-9]//g')
 if [[ ! -f "data/user_scores/$PUZZLE" ]]; then
