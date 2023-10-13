@@ -438,7 +438,9 @@ writeHttpResponse() {
   if directive_test=$(head -1 "pages/${ROUTE_SCRIPT}"); then
     if [[ "$directive_test" == "# sse" ]]; then
       respond 200 OK
+      header Access-Control-Allow-Origin '*'
       header Content-Type "text/event-stream"
+      header Content-Length 999999999
       end_headers
       source "pages/${ROUTE_SCRIPT}"
       TOPIC="$(topic)"

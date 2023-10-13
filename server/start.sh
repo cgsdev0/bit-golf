@@ -31,6 +31,8 @@ done
 
 mkdir -p data/user
 mkdir -p data/user_scores
+mkdir -p data/event
+mkdir -p data/event_scores
 mkdir -p data/updoots
 
 mkdir -p uploads
