@@ -26,6 +26,7 @@ header() {
 }
 
 respond() {
+    local CODE
     CODE=$1
     shift
     printf "HTTP/1.1 %s %s\r\n" "$CODE" "$*"
@@ -208,6 +209,7 @@ function status_code() {
 }
 
 function decode_result() {
+  local ENCODED
   ENCODED=${1}
   printf "%d%02d" $(((ENCODED >> 6) + 2)) $(( ENCODED & 63 ))
 }

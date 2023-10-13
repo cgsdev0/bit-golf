@@ -14,14 +14,24 @@ if [[ -z "$VERIFICATION" ]]; then
   return $(status_code 400)
 fi
 
-QUOTA0="${FORM_DATA[quota0]}"
-QUOTA1="${FORM_DATA[quota1]}"
-QUOTA2="${FORM_DATA[quota2]}"
-NAME="${FORM_DATA[name]}"
+QUOTA0=$(echo "${FORM_DATA[quota0]}" | tr -d '\n' | sed 's/[^0-9]//g')
+QUOTA1=$(echo "${FORM_DATA[quota1]}" | tr -d '\n' | sed 's/[^0-9]//g')
+QUOTA2=$(echo "${FORM_DATA[quota2]}" | tr -d '\n' | sed 's/[^0-9]//g')
+NAME=$(echo "${FORM_DATA[name]}" | tr -d '\n' | sed 's/[^a-zA-Z_.0-9]//g')
 PUZZLE_DATA="${FORM_DATA[puzzle]}"
 
 if [[ -z "$NAME" ]] || [[ -z "$QUOTA0" ]] || [[ -z "$QUOTA1" ]] || [[ -z "$QUOTA2" ]] || [[ -z "$PUZZLE_DATA" ]]; then
   echo "missing quotas or puzzle"
+  return $(status_code 400)
+fi
+
+if [[ "$QUOTA0" -le "$QUOTA1" ]] || [[ "$QUOTA1" -le "$QUOTA2" ]]; then
+  echo "bad quotas"
+  return $(status_code 400)
+fi
+
+if ! ./validate.py "$PUZZLE_DATA" "$QUOTA2" "$VERIFICATION"; then
+  echo "invalid verification"
   return $(status_code 400)
 fi
 

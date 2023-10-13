@@ -9,11 +9,12 @@ if [[ ! -f "data/default/$PUZZLE" ]]; then
 fi
 VERIFICATION=$(echo "${QUERY_PARAMS[verification]}" | tr -d '\n')
 if [[ "$REQUEST_METHOD" == "POST" ]]; then
-  if [[ -z "$VERIFICATION" ]]; then
-    echo "invalid"
+  NEW_SCORE=$(echo "${QUERY_PARAMS[score]}" | tr -d '\n' | sed 's/[^0-9]//g')
+  PUZZLE_TEXT="$(jq -r ".\"$PUZZLE\"" default_levels.json)"
+  if ! ./validate.py "$PUZZLE_TEXT" "$NEW_SCORE" "$VERIFICATION"; then
+    echo "invalid verification"
     return $(status_code 400)
   fi
-  NEW_SCORE=$(echo "${QUERY_PARAMS[score]}" | tr -d '\n' | sed 's/[^0-9]//g')
   echo "$NEW_SCORE ${HTTP_HEADERS[cf-connecting-ip]} $VERIFICATION" >> "data/default/$PUZZLE"
 fi
 
