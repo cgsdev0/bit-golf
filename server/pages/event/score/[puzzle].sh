@@ -10,6 +10,7 @@ if [[ ! -f "data/event_scores/$PUZZLE" ]]; then
     return $(status_code 404)
 fi
 USER_ID="${HTTP_HEADERS[x-user-id]}"
+debug "USER ID: $USER_ID"
 if [[ -z "$USER_ID" ]]; then
     end_headers
     return $(status_code 401)
