@@ -35,7 +35,6 @@ func do_request():
 	var body = stuff[3]
 	if result != 0 or response_code != 200:
 		# %HighScoreLabel.text = "Network error :("
-		print(response_code)
 		return
 	var level_key = body.get_string_from_utf8()
 	Events.save_user_level(level_key, %Palette.verification(), %Controller.bytes)

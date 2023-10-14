@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://p4li78mb0kwn"]
+[gd_scene load_steps=6 format=3 uid="uid://br25axkp60nwl"]
 
 [ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_bcuqr"]
 [ext_resource type="Script" path="res://scripts/scoreboard.gd" id="1_yyukl"]
-[ext_resource type="PackedScene" uid="uid://053xkskwi0r0" path="res://scenes/scoreboard_row.tscn" id="3_6kq5t"]
+[ext_resource type="Script" path="res://scripts/load_event_levels.gd" id="2_kcgl7"]
+[ext_resource type="PackedScene" path="res://scenes/scoreboard_row.tscn" id="3_6kq5t"]
+[ext_resource type="PackedScene" uid="uid://bfpccaxyqbn6n" path="res://scenes/score_chasers_button.tscn" id="4_qnkqa"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -12,6 +14,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_bcuqr")
+script = ExtResource("2_kcgl7")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -20,57 +23,120 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 2
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "BEST ALGORITHMS"
 horizontal_alignment = 1
 
-[node name="Panel" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Panel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel"]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="Leaderboard" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer"]
+[node name="Leaderboard" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 1
 script = ExtResource("1_yyukl")
 
-[node name="PanelContainer2" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
+[node name="PanelContainer2" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
 layout_mode = 2
 
-[node name="PanelContainer3" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
+[node name="PanelContainer3" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
 layout_mode = 2
 
-[node name="PanelContainer4" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
+[node name="PanelContainer4" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
 layout_mode = 2
 
-[node name="PanelContainer5" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
+[node name="PanelContainer5" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
 layout_mode = 2
 
-[node name="PanelContainer6" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
+[node name="PanelContainer6" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
 layout_mode = 2
 
-[node name="PanelContainer7" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
+[node name="PanelContainer7" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
 layout_mode = 2
 
-[node name="PanelContainer8" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
+[node name="PanelContainer8" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
 layout_mode = 2
 
-[node name="PanelContainer9" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
+[node name="PanelContainer9" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel/MarginContainer/Leaderboard" instance=ExtResource("3_6kq5t")]
 layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+text = "score_chasers.zip"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Current size: 10 bytes"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="Container" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("4_qnkqa")]
+layout_mode = 2
+
+[node name="Container2" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("4_qnkqa")]
+layout_mode = 2
+
+[node name="Container3" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("4_qnkqa")]
+layout_mode = 2
+
+[node name="Container4" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("4_qnkqa")]
+layout_mode = 2
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]

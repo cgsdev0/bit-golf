@@ -7,7 +7,7 @@ extends Control
 var puzzle = null
 var raw_text
 
-const MAX_BYTES = 512
+const MAX_BYTES = 800
 
 var score_string = """ Bytes:
  {input} -> {output}
@@ -68,7 +68,10 @@ func _ready():
 	
 func _on_puzzle_change(clear_palette = true):
 	if Events.custom_level:
-		%Like.show()
+		if Events.custom_level_key.begins_with("event_"):
+			%Like.hide()
+		else:
+			%Like.show()
 		puzzle = Events.custom_levels[Events.custom_level_key]
 	else:
 		%Like.hide()

@@ -25,8 +25,9 @@ var response_body = PackedByteArray()
 @onready var row = preload("res://scenes/scoreboard_row.tscn")
 func _ready():
 	for child in get_children():
-		child.queue_free()
-	connect_to_host("localhost", "/event/sse", 3035)
+		if child is Control:
+			child.queue_free()
+	connect_to_host("ld54.badcop.games", "/event/sse", 443)
 	
 func connect_to_host(domain : String, url_after_domain : String, port : int = -1):
 	self.domain = domain
@@ -36,7 +37,7 @@ func connect_to_host(domain : String, url_after_domain : String, port : int = -1
 	told_to_connect = true
 
 func attempt_to_connect():
-	var err = httpclient.connect_to_host(domain, port)
+	var err = httpclient.connect_to_host(domain, port, TLSOptions.client())
 	if err == OK:
 		emit_signal("connected")
 		is_connected = true

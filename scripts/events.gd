@@ -19,6 +19,11 @@ var save_data = {
 	"user": {}
 }
 
+func is_event():
+	if custom_level && custom_level_key.begins_with("event_"):
+		return true
+	return false
+
 func adjust(data):
 	var q0 = data.quota0
 	var q1 = data.quota1

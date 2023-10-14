@@ -40,7 +40,6 @@ func _ready():
 func apply(action, forward):
 	if !action:
 		return
-	print("Applying action: ", action)
 	match action.action:
 		Action.TOGGLE_RLE:
 			%Palette.get_child(action.index).toggle_rle()
@@ -71,13 +70,13 @@ func apply(action, forward):
 				%Palette.restore_color(action.text, action.rle, action.disabled, action.index)
 			
 func _input(event):
+	if Events.editor && !Events.editor_verifying:
+		return
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		return
 	if event.is_action_pressed("ui_redo"):
-		print("redo")
 		apply(redo(), true)
 	elif event.is_action_pressed("ui_undo"):
-		print("undo")
 		apply(undo(), false)
 	
 	
