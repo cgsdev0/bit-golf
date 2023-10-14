@@ -19,15 +19,15 @@ var best_scores = []
 var secret_board = {}
 
 var event_players = {
-	"533316027883323402": ["Ausstein", preload("res://gamers/6ecdfa528cd910139d59c68fc4a630b8.png")],
+	# "533316027883323402": ["Ausstein", preload("res://gamers/6ecdfa528cd910139d59c68fc4a630b8.png")],
 	"559761186254487573": ["icylava", preload("res://gamers/2282875a46c50d979ea91d980cd25dd8.png")],
-	"132132767646482432": ["underyx", preload("res://gamers/1bde16abcf1e9f78878857224048efdf.png")],
+	# "132132767646482432": ["underyx", preload("res://gamers/1bde16abcf1e9f78878857224048efdf.png")],
 	"522918310958858286": ["kuviman", preload("res://gamers/c1183bfd83b6614a9ee7e146ce37ae58.png")],
 	"158651343391686657": ["MarkAis", preload("res://gamers/b7ccbb20ebef13c5a673cc2c6575a113.png")],
 	"110534413015633920": ["Meep", preload("res://gamers/50b14e37c7d4c81688d5e30a69464ba2.png")],
 	"459020091917467648": ["Pomo", preload("res://gamers/feba8db942c442f7cb5857d3fc77d501.png")],
 	"701939869420617732": ["rickylee", preload("res://gamers/55b3f3d714bacfa5443e4d74ccf36e52.png")],
-	"431090395653341197": ["schadocalex", preload("res://gamers/5b031e575d0a75797f448ce4c7acee9b.png")]
+	# "431090395653341197": ["schadocalex", preload("res://gamers/5b031e575d0a75797f448ce4c7acee9b.png")]
 }
 
 var save_data = {
