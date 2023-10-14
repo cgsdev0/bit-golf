@@ -95,7 +95,6 @@ func toggle_rle():
 	if rle:
 		$RMBHint.hide()
 	get_parent().queue_repaint()
-	print("i did a toggle ", rle)
 	
 func toggle_disabled():
 	disabled = !disabled
