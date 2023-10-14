@@ -44,7 +44,7 @@ func populate_list():
 		btn.level_key = level.id
 		btn.wr = level.wr
 		btn.raw = level.raw_size
-		btn.cooked = Events.save_data.get(level.id, {}).get("bytes", level.raw_size)
+		btn.cooked = Events.save_data.user.get(level.id, {}).get("bytes", level.raw_size)
 		bacon += btn.cooked
 		i += 1
 	%Current.text = cur % bacon

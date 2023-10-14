@@ -8,21 +8,6 @@
 [ext_resource type="Script" path="res://scripts/secret.gd" id="6_0ru0n"]
 [ext_resource type="Texture2D" uid="uid://b6ai8gnqq80wb" path="res://sprites/secret.png" id="6_wdysn"]
 
-[sub_resource type="Animation" id="Animation_6ml71"]
-resource_name = "type"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_8j4l8"]
 length = 0.001
 tracks/0/type = "value"
@@ -38,10 +23,40 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_6ml71"]
+resource_name = "type"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m1fuk"]
 _data = {
 "RESET": SubResource("Animation_8j4l8"),
 "type": SubResource("Animation_6ml71")
+}
+
+[sub_resource type="Animation" id="Animation_hn0tu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.976471, 0.14902, 0.447059, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_vdwro"]
@@ -58,21 +73,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0.976471, 0.14902, 0.447059, 0.533333), Color(0.976471, 0.14902, 0.447059, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_hn0tu"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.976471, 0.14902, 0.447059, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_p8r4q"]
@@ -226,6 +226,7 @@ libraries = {
 }
 
 [node name="TextureRect3" type="TextureRect" parent="CenterContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("6_wdysn")

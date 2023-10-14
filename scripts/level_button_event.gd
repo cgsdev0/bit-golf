@@ -25,7 +25,7 @@ extends Control
 @onready var text2 = %Bytes2.text
 
 func update_text():
-	%Bytes.text = text1 % [cooked, wr]
+	%Bytes.text = text1 % [raw, cooked]
 
 func update_text2():
 	%Bytes2.text = text2 % wr

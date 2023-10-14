@@ -34,7 +34,7 @@ var initted = false
 func init(par):
 	initted = true
 	global_position = par.global_position
-	z_index = 15 -par.get_index()
+	z_index = 15 - par.get_index()
 	
 func wtf(par):
 	size = par.size
@@ -42,5 +42,5 @@ func wtf(par):
 	if !initted:
 		return
 	var tween = get_tree().create_tween()
-	z_index = -par.get_index()
+	z_index = 15 - par.get_index()
 	tween.tween_property(self, "global_position", par.global_position, 0.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
