@@ -25,8 +25,8 @@ func do_request():
 		"name": %LevelName.text.uri_encode(),
 	})
 	var hacks = ""
-	if OS.is_debug_build():
-		hacks = "event/"
+#	if OS.is_debug_build():
+#		hacks = "event/"
 	$HTTPRequest.request(Events.base_url() + hacks + "publish?verification=" + $%Palette.verification().uri_encode(), request_headers, HTTPClient.METHOD_POST, request_body)
 	var stuff = await $HTTPRequest.request_completed
 	var result = stuff[0]

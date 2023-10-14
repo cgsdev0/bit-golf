@@ -1,10 +1,102 @@
-[gd_scene load_steps=6 format=3 uid="uid://5erleu6k4tjn"]
+[gd_scene load_steps=15 format=3 uid="uid://5erleu6k4tjn"]
 
 [ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_6xps3"]
 [ext_resource type="Script" path="res://scripts/level_select.gd" id="2_ar6l1"]
 [ext_resource type="Script" path="res://scripts/load_user_levels.gd" id="3_qpi7w"]
 [ext_resource type="Script" path="res://scripts/button_juice.gd" id="4_h462y"]
 [ext_resource type="AudioStream" uid="uid://0o3luyha0htn" path="res://sounds/tab.wav" id="4_n4cyu"]
+[ext_resource type="Script" path="res://scripts/secret.gd" id="6_0ru0n"]
+[ext_resource type="Texture2D" uid="uid://b6ai8gnqq80wb" path="res://sprites/secret.png" id="6_wdysn"]
+
+[sub_resource type="Animation" id="Animation_6ml71"]
+resource_name = "type"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8j4l8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m1fuk"]
+_data = {
+"RESET": SubResource("Animation_8j4l8"),
+"type": SubResource("Animation_6ml71")
+}
+
+[sub_resource type="Animation" id="Animation_vdwro"]
+resource_name = "error"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.976471, 0.14902, 0.447059, 0.533333), Color(0.976471, 0.14902, 0.447059, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hn0tu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.976471, 0.14902, 0.447059, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_p8r4q"]
+resource_name = "success"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0.886275, 0.180392, 0.533333), Color(0.65098, 0.886275, 0.180392, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tq28j"]
+_data = {
+"RESET": SubResource("Animation_hn0tu"),
+"error": SubResource("Animation_vdwro"),
+"success": SubResource("Animation_p8r4q")
+}
 
 [node name="Node2D" type="Control"]
 layout_mode = 3
@@ -96,6 +188,93 @@ script = ExtResource("4_h462y")
 [node name="TabSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_n4cyu")
 volume_db = -9.0
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("6_0ru0n")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_wdysn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/HBoxContainer/TextureRect"]
+libraries = {
+"": SubResource("AnimationLibrary_m1fuk")
+}
+
+[node name="TextureRect2" type="TextureRect" parent="CenterContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_wdysn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/HBoxContainer/TextureRect2"]
+libraries = {
+"": SubResource("AnimationLibrary_m1fuk")
+}
+
+[node name="TextureRect3" type="TextureRect" parent="CenterContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_wdysn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/HBoxContainer/TextureRect3"]
+libraries = {
+"": SubResource("AnimationLibrary_m1fuk")
+}
+
+[node name="TextureRect4" type="TextureRect" parent="CenterContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_wdysn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/HBoxContainer/TextureRect4"]
+libraries = {
+"": SubResource("AnimationLibrary_m1fuk")
+}
+
+[node name="TextureRect5" type="TextureRect" parent="CenterContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_wdysn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer/HBoxContainer/TextureRect5"]
+libraries = {
+"": SubResource("AnimationLibrary_m1fuk")
+}
+
+[node name="Control" type="Control" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.976471, 0.14902, 0.447059, 0)
+
+[node name="Error" type="AnimationPlayer" parent="ColorRect"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_tq28j")
+}
 
 [connection signal="tab_changed" from="VBoxContainer/TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_bcuqr"]
 [ext_resource type="Script" path="res://scripts/scoreboard.gd" id="1_yyukl"]
 [ext_resource type="Script" path="res://scripts/load_event_levels.gd" id="2_kcgl7"]
-[ext_resource type="PackedScene" path="res://scenes/scoreboard_row.tscn" id="3_6kq5t"]
+[ext_resource type="PackedScene" uid="uid://053xkskwi0r0" path="res://scenes/scoreboard_row.tscn" id="3_6kq5t"]
 [ext_resource type="PackedScene" uid="uid://bfpccaxyqbn6n" path="res://scenes/score_chasers_button.tscn" id="4_qnkqa"]
 
 [node name="Control" type="Control"]
@@ -99,9 +99,10 @@ layout_mode = 2
 text = "score_chasers.zip"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+[node name="Current" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Current size: 10 bytes"
+text = "Current size: %d bytes"
 horizontal_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]

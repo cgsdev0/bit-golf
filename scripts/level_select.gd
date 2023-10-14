@@ -27,6 +27,5 @@ func _on_button_pressed():
 	Events.editor_verifying = false
 	get_tree().change_scene_to_file("res://scenes/compression.tscn")
 
-
 func _on_tab_container_tab_changed(tab):
 	$TabSound.play()

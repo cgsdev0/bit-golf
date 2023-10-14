@@ -33,9 +33,10 @@ var cache = {}
 var waiting_list = []
 
 @onready var grid = %GridContainer
-
+@onready var cur = %Current.text
 func populate_list():
 	var i = 0
+	var bacon = 0
 	for level_key in Events.custom_levels:
 		var level = Events.custom_levels[level_key]
 		var btn = grid.get_child(i)
@@ -44,7 +45,9 @@ func populate_list():
 		btn.wr = level.wr
 		btn.raw = level.raw_size
 		btn.cooked = Events.save_data.get(level.id, {}).get("bytes", level.raw_size)
+		bacon += btn.cooked
 		i += 1
+	%Current.text = cur % bacon
 		
 func _process(delta):
 	pass

@@ -6,7 +6,6 @@ signal connection_error(error)
 
 const event_tag = "event:"
 const data_tag = "data:"
-const continue_internal = "continue_internal"
 
 var httpclient = HTTPClient.new()
 var is_connected = false
@@ -85,14 +84,12 @@ func _physics_process(delta):
 		else:
 			response_body = response_body + chunk
 		var body = response_body.get_string_from_utf8()
-		response_body.resize(0)
-		var events = body.split("\n\n", false)
-		for event in events:
-			var stuff = event.split("\n")
-			print(stuff)
-			var e = stuff[0].split(": ")[1]
+		var idx = body.find("\n\n")
+		while idx != -1:
+			var stuff = get_event_data(body.substr(0, idx))
+			var e = stuff.event
 			if e == "score":
-				var data = stuff[1].split(": ")[1].split(":")
+				var data = stuff.data.split(":")
 				var user_id = data[0]
 				var score = int(data[1])
 				var r = row.instantiate()
@@ -105,12 +102,15 @@ func _physics_process(delta):
 				add_child(r)
 				get_owner().add_child(r2)
 			if e == "update":
-				var data = stuff[1].split(": ")[1].split(":")
+				var data = stuff.data.split(":")
 				var user_id = data[0]
 				var score = int(data[1])
 				for child in get_children():
 					if child.id == user_id:
 						child.score = score
+			response_body = response_body.slice(idx + 2)
+			body = response_body.get_string_from_utf8()
+			idx = body.find("\n\n")
 		var children = get_children()
 		for child in children:
 			remove_child(child)
@@ -120,25 +120,11 @@ func _physics_process(delta):
 		for child in children:
 			add_child(child)
 
-func get_event_data(body : String) -> Dictionary:
-	var result = {}
-	var event_idx = body.find(event_tag)
-	if event_idx == -1:
-		result["event"] = continue_internal
-		return result
-	assert(event_idx != -1)
-	var data_idx = body.find(data_tag, event_idx + event_tag.length())
-	assert(data_idx != -1)
-	var event = body.substr(event_idx, data_idx)
-	event = event.replace(event_tag, "").strip_edges()
-	assert(event)
-	assert(event.length() > 0)
-	result["event"] = event
-	var data = body.right(data_idx + data_tag.length()).strip_edges()
-	assert(data)
-	assert(data.length() > 0)
-	result["data"] = data
-	return result
+func get_event_data(body : String):
+	var a = body.split("\n")
+	var b = a[0].split(": ")[1]
+	var c = a[1].split(": ")[1]
+	return { "event": b, "data": c }
 
 func _exit_tree():
 	if httpclient:

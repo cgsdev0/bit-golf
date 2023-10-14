@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj62v8pi60o5m"]
+
+[ext_resource type="Theme" uid="uid://q0quvtkvw84n" path="res://theme.tres" id="1_ixdhq"]
+[ext_resource type="Script" path="res://scripts/character_select.gd" id="2_1rtix"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ixdhq")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "CHOOSE YOUR ALGORITHM"
+horizontal_alignment = 1
+
+[node name="HFlowContainer" type="GridContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 3
+script = ExtResource("2_1rtix")

@@ -213,6 +213,9 @@ func update_score(this_is_dumb_but_its_a_game_jam_so_its_ok_smile = false):
 		var low_score = 0
 		var path = "score/user/" if Events.custom_level else "score/"
 		var request_headers = PackedStringArray(["X-Postjam: true"])
+		if Events.is_event():
+			path = "event/score/"
+			request_headers.append("X-User-Id: %s" % Events.event_user_id)
 		$HTTPRequest.request(Events.base_url() + path + Events.get_puzzle_id() + "?score=" + str(output + cost) + "&verification=" + $%Palette.verification().uri_encode(), request_headers, HTTPClient.METHOD_POST)
 		var stuff = await $HTTPRequest.request_completed
 		var result = stuff[0]

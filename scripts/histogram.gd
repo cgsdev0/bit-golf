@@ -6,7 +6,9 @@ var bucket = 0
 @onready var Bar = preload("res://scenes/histogram_bar.tscn")
 
 func endpoint():
-	if Events.custom_level:
+	if Events.is_event():
+		return "event/score/%s?histogram=true"
+	elif Events.custom_level:
 		return "score/user/%s?histogram=true"
 	else:
 		return "score/%s?histogram=true"

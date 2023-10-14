@@ -1,21 +1,10 @@
 extends Control
 
-var players = {	
-	"533316027883323402": "Ausstein",
-	"559761186254487573": "icylava",
-	"132132767646482432": "underyx",
-	"522918310958858286": "kuviman",
-	"158651343391686657": "MarkAis",
-	"110534413015633920": "Meep",
-	"459020091917467648": "Pomo",
-	"701939869420617732": "rickylee",
-	"431090395653341197": "schadocalex",
-	"363257423865053184": "tron"
-}
 @export var id: String = "":
 	set (value):
 		id = value
-		%Name.text = players[id]
+		%Name.text = Events.event_players.get(id, "unknown")[0]
+		%Avatar.texture = Events.event_players.get(id, "unknown")[1]
 		if buddy:
 			buddy.id = value
 		
@@ -35,7 +24,7 @@ func _ready():
 		item_rect_changed.connect(buddy.wtf.bind(self))
 		buddy.hide()
 		# oof
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.5).timeout
 		buddy.init(self)
 		buddy.show()
 		modulate = Color.TRANSPARENT

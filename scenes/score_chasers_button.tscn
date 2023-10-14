@@ -36,12 +36,14 @@ horizontal_alignment = 1
 [node name="Bytes" type="Label" parent="MarginContainer2/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.564706, 0.564706, 0.564706, 1)
 text = "%d -> %d"
 horizontal_alignment = 1
 
 [node name="Bytes2" type="Label" parent="MarginContainer2/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.564706, 0.564706, 0.564706, 1)
 text = "WR: %d"
 horizontal_alignment = 1
 
