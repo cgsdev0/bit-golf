@@ -24,11 +24,11 @@ VERIFICATION=$(echo "${QUERY_PARAMS[verification]}" | tr -d '\n')
 if [[ "$REQUEST_METHOD" == "POST" ]]; then
   NEW_SCORE=$(echo "${QUERY_PARAMS[score]}" | tr -d '\n' | sed 's/[^0-9]//g')
   PUZZLE_TEXT="$(head -n1 data/event/$PUZZLE | jq -r '.puzzle')"
-  # if ! ./validate.py "$PUZZLE_TEXT" "$NEW_SCORE" "$VERIFICATION"; then
-  #   end_headers
-  #   echo "invalid verification"
-  #   return $(status_code 400)
-  # fi
+  if ! ./validate.py "$PUZZLE_TEXT" "$NEW_SCORE" "$VERIFICATION"; then
+    end_headers
+    echo "invalid verification"
+    return $(status_code 400)
+  fi
   OLD_SCORE="$(grep " $USER_ID" "data/event_scores/$PUZZLE" | cut -d' ' -f1)"
   if [[ $NEW_SCORE -lt $OLD_SCORE ]]; then
     sed -i "s/$OLD_SCORE $USER_ID/$NEW_SCORE $USER_ID/" "data/event_scores/$PUZZLE"
