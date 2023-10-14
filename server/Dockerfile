@@ -2,7 +2,7 @@ FROM ubuntu
 
 ENV DEV false
 
-RUN apt-get update && apt-get install -y ucspi-tcp jq moreutils python3
+RUN apt-get update && apt-get install -y ucspi-tcp jq moreutils python3 bc
 
 EXPOSE 3000
 
