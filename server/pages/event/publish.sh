@@ -46,7 +46,7 @@ while read -r ID PLAYER_NAME; do
 done < event_players
 
 cat > ${FILE_ID} <<-EOF
-{"name":"$NAME","date":"$(date "+%m/%d/%Y")","quota0":$QUOTA0,"quota1":$QUOTA1,"quota2":$QUOTA2,"puzzle":"$PUZZLE_DATA"}
+{"name":"$NAME","date":"$(date "+%m/%d/%Y")","quota0":$QUOTA0,"quota1":$QUOTA1,"quota2":$QUOTA2,"puzzle":"$PUZZLE_DATA","raw_size":$RAW_SIZE}
 $VERIFICATION
 ${HTTP_HEADERS[cf-connecting-ip]}
 EOF
