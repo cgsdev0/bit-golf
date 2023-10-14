@@ -36,7 +36,7 @@ if ! ./validate.py "$PUZZLE_DATA" "$QUOTA2" "$VERIFICATION"; then
   return $(status_code 400)
 fi
 
-FILE_ID=$(mktemp -p data/event XXXXX)
+FILE_ID=$(mktemp -p data/event event_XXXXX)
 FILE_TAG=$(basename $FILE_ID)
 
 # echo "$QUOTA2 ${HTTP_HEADERS[cf-connecting-ip]} $VERIFICATION" > "data/event_scores/$FILE_TAG"
