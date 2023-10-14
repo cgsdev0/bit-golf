@@ -440,7 +440,6 @@ writeHttpResponse() {
       respond 200 OK
       header Access-Control-Allow-Origin '*'
       header Content-Type "text/event-stream"
-      header Content-Length 99999999
       end_headers
       source "pages/${ROUTE_SCRIPT}"
       TOPIC="$(topic)"
