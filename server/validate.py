@@ -71,6 +71,8 @@ try:
 
     parsed = [ raw_text ]
     for span in palette:
+        if not span["text"]:
+            continue
         parsed = parse(parsed, span)
 
     output = ""
