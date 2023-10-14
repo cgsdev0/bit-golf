@@ -4,7 +4,7 @@ header Content-Type 'text/plain'
 header Access-Control-Allow-Origin '*'
 header Access-Control-Allow-Headers 'x-postjam,x-user-id'
 
-PUZZLE=$(echo "${PATH_VARS[puzzle]}" | tr -d '\n' | sed 's/[^a-zA-Z0-9]//g')
+PUZZLE=$(echo "${PATH_VARS[puzzle]}" | tr -d '\n' | sed 's/[^a-z_A-Z0-9]//g')
 if [[ ! -f "data/event_scores/$PUZZLE" ]]; then
     end_headers
     return $(status_code 404)
