@@ -32,7 +32,7 @@ if [[ "$REQUEST_METHOD" == "POST" ]]; then
   OLD_SCORE="$(grep " $USER_ID" "data/event_scores/$PUZZLE" | cut -d' ' -f1)"
   if [[ $NEW_SCORE -lt $OLD_SCORE ]]; then
     sed -i "s/$OLD_SCORE $USER_ID/$NEW_SCORE $USER_ID/" "data/event_scores/$PUZZLE"
-    TOTAL_SCORE="$(grep " $USER_ID" data/event_scores/* | cut -d' ' -f1 | paste -sd+ | bc)"
+    TOTAL_SCORE="$(grep " $USER_ID" data/event_scores/* |cut -d':' -f2 | cut -d' ' -f1 | paste -sd+ | bc)"
     event update "$USER_ID:$TOTAL_SCORE" | publish event
   fi
 fi
