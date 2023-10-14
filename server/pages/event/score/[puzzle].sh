@@ -10,19 +10,19 @@ if [[ ! -f "data/event_scores/$PUZZLE" ]]; then
     return $(status_code 404)
 fi
 USER_ID="${HTTP_HEADERS[x-user-id]}"
-debug "USER ID: $USER_ID"
-if [[ -z "$USER_ID" ]]; then
-    end_headers
-    return $(status_code 401)
-fi
-
-if ! grep -q "$USER_ID" event_players; then
-    end_headers
-    return $(status_code 401)
-fi
 
 VERIFICATION=$(echo "${QUERY_PARAMS[verification]}" | tr -d '\n')
 if [[ "$REQUEST_METHOD" == "POST" ]]; then
+  if [[ -z "$USER_ID" ]]; then
+      end_headers
+      return $(status_code 401)
+  fi
+
+  if ! grep -q "$USER_ID" event_players; then
+      end_headers
+      return $(status_code 401)
+  fi
+
   NEW_SCORE=$(echo "${QUERY_PARAMS[score]}" | tr -d '\n' | sed 's/[^0-9]//g')
   PUZZLE_TEXT="$(head -n1 data/event/$PUZZLE | jq -r '.puzzle')"
   if ! ./validate.py "$PUZZLE_TEXT" "$NEW_SCORE" "$VERIFICATION"; then
