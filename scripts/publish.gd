@@ -16,14 +16,18 @@ func do_request():
 		"Content-Type: application/x-www-form-urlencoded",
 	])
 	var quotas = %Controller.get_quotas()
-	var request_body = "puzzle={puzzle}&quota0={quota0}&quota1={quota1}&quota2={quota2}&name={name}".format({
+	var request_body = "puzzle={puzzle}&quota0={quota0}&quota1={quota1}&quota2={quota2}&name={name}&raw_size={raw}".format({
 		"puzzle": Marshalls.utf8_to_base64(%Controller.raw_text).uri_encode(),
 		"quota0": quotas[0],
 		"quota1": quotas[1],
 		"quota2": quotas[2],
+		"raw": %Controller.raw_text.length(),
 		"name": %LevelName.text.uri_encode(),
 	})
-	$HTTPRequest.request(Events.base_url() + "publish?verification=" + $%Palette.verification().uri_encode(), request_headers, HTTPClient.METHOD_POST, request_body)
+	var hacks = ""
+	if OS.is_debug_build():
+		hacks = "event/"
+	$HTTPRequest.request(Events.base_url() + hacks + "publish?verification=" + $%Palette.verification().uri_encode(), request_headers, HTTPClient.METHOD_POST, request_body)
 	var stuff = await $HTTPRequest.request_completed
 	var result = stuff[0]
 	var response_code = stuff[1]
