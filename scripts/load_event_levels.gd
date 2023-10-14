@@ -3,7 +3,10 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Events.custom_levels = {}
+	if Events.loaded_secret:
+		populate_list()
+	else:
+		Events.custom_levels = {}
 	$HTTPRequest.request_completed.connect(_http_request_completed)
 	$HTTPRequest.request(Events.base_url() + "event/list")
 
@@ -35,6 +38,7 @@ var waiting_list = []
 @onready var grid = %GridContainer
 @onready var cur = %Current.text
 func populate_list():
+	Events.loaded_secret = true
 	var i = 0
 	var bacon = 0
 	for level_key in Events.custom_levels:

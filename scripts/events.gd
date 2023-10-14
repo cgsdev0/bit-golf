@@ -5,6 +5,7 @@ var puzzle_index = 0
 var custom_level = false
 var custom_level_key = ""
 
+var loaded_secret = false
 var custom_levels = {}
 
 var editor = false
@@ -14,6 +15,8 @@ var use_localhost = false
 var event_user_id = ""
 
 var best_scores = []
+
+var secret_board = {}
 
 var event_players = {
 	"533316027883323402": ["Ausstein", preload("res://gamers/6ecdfa528cd910139d59c68fc4a630b8.png")],

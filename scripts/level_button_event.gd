@@ -1,10 +1,13 @@
 extends Control
 
 
+var loaded = false
+
 @export var text: String = "":
 	set (value):
 		text = value
 		%Name.text = value
+		loaded = true
 
 @export var raw: int = 0:
 	set (value):
@@ -34,6 +37,8 @@ var level_key
 
 
 func _on_button_juice_pressed():
+	if !loaded:
+		return
 	Events.editor = false
 	Events.editor_verifying = false
 	Events.puzzle_index = -1
