@@ -26,13 +26,18 @@ func _input(event):
 			submit()
 			
 func submit():
-	if word != "EVENT":
-		%Error.stop()
-		%Error.play("error")
-		word = ""
-	else:
+	if word == "EVENT":
 		locked = true
 		%Error.stop()
 		%Error.play("success")
 		await %Error.animation_finished
 		get_tree().change_scene_to_file("res://scenes/character_select.tscn")
+	elif word == "CHEAT":
+		Events.cheat()
+		%Error.play("success")
+		await %Error.animation_finished
+		get_tree().reload_current_scene()
+	else:
+		%Error.stop()
+		%Error.play("error")
+		word = ""

@@ -62,7 +62,8 @@ func get_palette_verification():
 		if save_data.default.has(k):
 			return save_data.default[k].solution
 	return null
-	
+
+
 func base_url():
 	if OS.is_debug_build() && use_localhost:
 		return "http://localhost:3035/"
@@ -110,7 +111,13 @@ func get_user_best_score(k):
 		return custom_levels[k].wr
 	return -1
 	
+func cheat():
+	save_data["cheats"] = true
+	save_game()
+	
 func get_unlock_index():
+	if save_data.get("cheats", false):
+		return puzzles.size()
 	for i in range(puzzles.size()):
 		if not str(i) in save_data.default:
 			return i
